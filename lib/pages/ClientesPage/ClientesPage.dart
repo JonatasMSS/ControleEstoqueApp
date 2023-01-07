@@ -10,8 +10,15 @@ class ClientesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBarComponent(NavBarTitle: 'Meus Clientes'),
-      body: DataByDay(),
-    );
+        appBar: NavBarComponent(NavBarTitle: 'Meus Clientes'),
+        body: SingleChildScrollView(
+          child: Column(
+            children: const [
+              DataByDay(
+                title: 'Terça-feira',
+              )
+            ],
+          ),
+        ));
   }
 }
