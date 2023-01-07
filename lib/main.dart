@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
 
 import 'package:get/get.dart';
 
 void main() {
   runApp(const MainApp());
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 }
 
 class MainApp extends StatelessWidget {
@@ -17,8 +17,10 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       theme: ThemeData(fontFamily: 'Roboto-Condensed'),
       initialRoute: '/',
+      transitionDuration: const Duration(milliseconds: 500),
       getPages: [
         GetPage(name: '/', page: () => const HomePage()),
+        GetPage(name: '/clientes', page: () => const ClientesPage()),
       ],
     );
   }

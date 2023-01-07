@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/BigIconButton/BigIconButton.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,7 +44,8 @@ class _HomePageState extends State<HomePage> {
                   description: "Fazer pedido",
                   imageLocation: 'lib/assets/images/IconPedido.png',
                 ),
-                const BigIconButton(
+                BigIconButton(
+                  onClick: () => Get.toNamed('/clientes'),
                   imageLocation: 'lib/assets/images/IconClient.png',
                   description: "Clientes",
                 ),
