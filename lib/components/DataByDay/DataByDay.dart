@@ -23,7 +23,7 @@ class DataByDay extends StatelessWidget {
         ),
         child: Text(
           title ?? 'NO DATA',
-          style: TextStyle(
+          style: const TextStyle(
             color: Color.fromARGB(255, 97, 88, 88),
             fontStyle: FontStyle.italic,
           ),
