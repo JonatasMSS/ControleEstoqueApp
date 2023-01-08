@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
+import 'package:genilson_app/components/DropDownInputC/DropDownInputC.dart';
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
@@ -16,6 +17,7 @@ class ClientesPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF6AFF79),
           onPressed: () => showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (context) {
                 return const ClientDialogAdd();
@@ -27,20 +29,59 @@ class ClientesPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: const [
+              SizedBox(
+                height: 20,
+              ),
               DataByDay(
                 title: 'Terça-feira',
                 dataChildrens: [
                   ClientComponent(),
                 ],
-              )
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              DataByDay(
+                title: 'Quarta-feira',
+                dataChildrens: [],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              DataByDay(
+                title: 'Quinta-feira',
+                dataChildrens: [],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              DataByDay(
+                title: 'Sexta-feira',
+                dataChildrens: [],
+              ),
+              SizedBox(
+                height: 40,
+              ),
             ],
           ),
         ));
   }
 }
 
-class ClientDialogAdd extends StatelessWidget {
+class ClientDialogAdd extends StatefulWidget {
   const ClientDialogAdd({super.key});
+
+  @override
+  State<ClientDialogAdd> createState() => _ClientDialogAddState();
+}
+
+class _ClientDialogAddState extends State<ClientDialogAdd> {
+  String? _dateData;
+  void hChangeDateData(String? value) {
+    setState(() {
+      _dateData = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +116,26 @@ class ClientDialogAdd extends StatelessWidget {
           type: TextInputType.number,
         ),
         const SizedBox(
-          height: 20,
+          height: 30,
+        ),
+        DropDownInputC(
+          dataController: _dateData,
+          onDataChange: hChangeDateData,
+        ),
+        const SizedBox(
+          height: 30,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
+          children: [
             SimpleButtonC(
               primary: true,
               text: 'Confirmar',
+              onClick: () => Navigator.pop(context),
             ),
             SimpleButtonC(
               text: 'Cancelar',
+              onClick: () => Navigator.pop(context),
             )
           ],
         ),
