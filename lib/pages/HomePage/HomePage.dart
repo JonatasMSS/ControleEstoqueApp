@@ -40,7 +40,8 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               // ignore: prefer_const_literals_to_create_immutables
               children: [
-                const BigIconButton(
+                BigIconButton(
+                  onClick: () => Get.toNamed('/pedidos'),
                   description: "Fazer pedido",
                   imageLocation: 'lib/assets/images/IconPedido.png',
                 ),

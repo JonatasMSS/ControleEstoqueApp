@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
+import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
 
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class MainApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => const HomePage()),
         GetPage(name: '/clientes', page: () => const ClientesPage()),
+        GetPage(name: '/pedidos', page: () => const FazerPedidoPage())
       ],
     );
   }
