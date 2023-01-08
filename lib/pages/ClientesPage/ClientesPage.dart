@@ -5,6 +5,7 @@ import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
+import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
 
 class ClientesPage extends StatelessWidget {
   const ClientesPage({super.key});
@@ -44,18 +45,49 @@ class ClientDialogAdd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      title: const Text("Criar novo cliente"),
+      titlePadding: const EdgeInsets.all(0),
+      title: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(20),
+        clipBehavior: Clip.hardEdge,
+        decoration: const BoxDecoration(
+          color: Colors.blue,
+        ),
+        child: const Text(
+          'Criar novo cliente',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
       children: [
-        InputFormComponent(
+        const SizedBox(
+          height: 10,
+        ),
+        const InputFormComponent(
           titleForm: 'Nome do cliente',
           placeholder: 'Nome do cliente',
         ),
         const SizedBox(
           height: 20,
         ),
-        InputFormComponent(
+        const InputFormComponent(
           titleForm: 'Numero',
           placeholder: 'Numero do cliente',
+          type: TextInputType.number,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            SimpleButtonC(
+              primary: true,
+              text: 'Confirmar',
+            ),
+            SimpleButtonC(
+              text: 'Cancelar',
+            )
+          ],
         ),
       ],
     );
