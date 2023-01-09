@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,6 +16,26 @@ class ClientesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<String> values = ['terca', 'quarta', 'quinta', 'sexta'];
+    List<String> names = [
+      'joao',
+      'maria',
+      'josefina',
+      'carlitos',
+      'santos',
+      'alexandremota'
+    ];
+
+    final List<ClientModel> _testDatabase = List.generate(
+      20,
+      (index) => ClientModel(
+        id: index,
+        name: names[Random().nextInt(names.length)],
+        number: 00000000,
+        date: values[Random().nextInt(values.length)],
+      ),
+    );
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF6AFF79),
@@ -36,14 +58,31 @@ class ClientesPage extends StatelessWidget {
               DataByDay(
                 valueData: 'terca',
                 title: 'Terça-feira',
-                dataChildrens: [
-                  ClientModel(
-                      id: 0, name: 'Juninho', number: 838383, date: 'terca'),
-                  ClientModel(
-                      id: 1, name: 'Alexandre', number: 838383, date: 'quarta'),
-                  ClientModel(
-                      id: 2, name: 'Marta', number: 838383, date: 'terca'),
-                ],
+                dataChildrens: _testDatabase,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              DataByDay(
+                valueData: 'quarta',
+                title: 'Quarta-feira',
+                dataChildrens: _testDatabase,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              DataByDay(
+                valueData: 'quinta',
+                title: 'Quinta-feira',
+                dataChildrens: _testDatabase,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              DataByDay(
+                valueData: 'sexta',
+                title: 'Sexta-feira',
+                dataChildrens: _testDatabase,
               ),
             ],
           ),
