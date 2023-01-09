@@ -9,8 +9,23 @@ import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 
 import '../../models/ClientModel/ClientModel.dart';
 
-class FazerPedidoPage extends StatelessWidget {
+class FazerPedidoPage extends StatefulWidget {
   const FazerPedidoPage({super.key});
+
+  @override
+  State<FazerPedidoPage> createState() => _FazerPedidoPageState();
+}
+
+class _FazerPedidoPageState extends State<FazerPedidoPage> {
+  late bool focusChange;
+  @override
+  void initState() {
+    setState(() {
+      focusChange = false;
+    });
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +95,31 @@ class FazerPedidoPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const InputSearchComponent(
-                hintText: 'Digite o nome do cliente',
+              Focus(
+                onFocusChange: (hasFocus) {
+                  if (hasFocus) {
+                    setState(() {
+                      focusChange = !focusChange;
+                    });
+                  } else {
+                    setState(() {
+                      focusChange = false;
+                    });
+                  }
+                },
+                child: InputSearchComponent(
+                  hintText: 'Digite o nome do cliente',
+                ),
               ),
-              ...dateWidget,
+              Visibility(
+                visible: !focusChange,
+                replacement: const Center(
+                  child: Text("Pesquisa ativada!"),
+                ),
+                child: Column(
+                  children: dateWidget,
+                ),
+              ),
             ],
           ),
         ),
