@@ -7,6 +7,7 @@ import 'package:genilson_app/components/DropDownInputC/DropDownInputC.dart';
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 class ClientesPage extends StatelessWidget {
   const ClientesPage({super.key});
@@ -28,41 +29,21 @@ class ClientesPage extends StatelessWidget {
         appBar: NavBarComponent(NavBarTitle: 'Meus Clientes'),
         body: SingleChildScrollView(
           child: Column(
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
                 height: 20,
               ),
               DataByDay(
+                valueData: 'terca',
                 title: 'Terça-feira',
                 dataChildrens: [
-                  ClientComponent(
-                    editable: true,
-                  ),
+                  ClientModel(
+                      id: 0, name: 'Juninho', number: 838383, date: 'terca'),
+                  ClientModel(
+                      id: 1, name: 'Alexandre', number: 838383, date: 'quarta'),
+                  ClientModel(
+                      id: 2, name: 'Marta', number: 838383, date: 'terca'),
                 ],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              DataByDay(
-                title: 'Quarta-feira',
-                dataChildrens: [],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              DataByDay(
-                title: 'Quinta-feira',
-                dataChildrens: [],
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              DataByDay(
-                title: 'Sexta-feira',
-                dataChildrens: [],
-              ),
-              SizedBox(
-                height: 40,
               ),
             ],
           ),

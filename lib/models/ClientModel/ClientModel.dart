@@ -4,7 +4,7 @@ import 'dart:convert';
 class ClientModel {
   int id;
   String name;
-  String number;
+  int number;
   String date;
   ClientModel({
     required this.id,
@@ -16,7 +16,7 @@ class ClientModel {
   ClientModel copyWith({
     int? id,
     String? name,
-    String? number,
+    int? number,
     String? date,
   }) {
     return ClientModel(
@@ -40,7 +40,7 @@ class ClientModel {
     return ClientModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      number: map['number'] as String,
+      number: map['number'] as int,
       date: map['date'] as String,
     );
   }

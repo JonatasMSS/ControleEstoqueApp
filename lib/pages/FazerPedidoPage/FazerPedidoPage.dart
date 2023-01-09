@@ -12,28 +12,8 @@ class FazerPedidoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> dateWidget = const [
       DataByDay(
+        valueData: 'terca',
         title: 'Terça-feira',
-      ),
-      SizedBox(
-        height: 30,
-      ),
-      DataByDay(
-        title: 'Quarta-feira',
-      ),
-      SizedBox(
-        height: 30,
-      ),
-      DataByDay(
-        title: 'Quinta-feira',
-      ),
-      SizedBox(
-        height: 30,
-      ),
-      DataByDay(
-        title: 'Sexta-feira',
-      ),
-      SizedBox(
-        height: 30,
       ),
     ];
 
