@@ -35,7 +35,9 @@ class ClientesPage extends StatelessWidget {
               DataByDay(
                 title: 'Terça-feira',
                 dataChildrens: [
-                  ClientComponent(),
+                  ClientComponent(
+                    editable: true,
+                  ),
                 ],
               ),
               SizedBox(

@@ -7,11 +7,12 @@ import 'package:flutter/src/widgets/framework.dart';
 class ClientComponent extends StatelessWidget {
   final String? clientName;
   final String? clientNumber;
-
+  final bool editable;
   const ClientComponent({
     Key? key,
     this.clientName,
     this.clientNumber,
+    this.editable = false,
   }) : super(key: key);
 
   @override
@@ -56,12 +57,15 @@ class ClientComponent extends StatelessWidget {
           ),
           Row(
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.amber,
-                child: IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () => {},
-                  color: Colors.black,
+              Visibility(
+                visible: editable,
+                child: CircleAvatar(
+                  backgroundColor: Colors.amber,
+                  child: IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () => {},
+                    color: Colors.black,
+                  ),
                 ),
               ),
               const SizedBox(
