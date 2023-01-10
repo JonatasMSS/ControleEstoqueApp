@@ -27,8 +27,9 @@ class FazerPedidoPage extends StatefulWidget {
 }
 
 class _FazerPedidoPageState extends State<FazerPedidoPage> {
+  //Variaveis
   List<ClientModel> testDatabase = List.generate(
-    20,
+    5,
     (index) => ClientModel(
         id: index,
         name: names[Random().nextInt(names.length)],
@@ -37,11 +38,15 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
   );
   late bool focusChange;
   late List<ClientModel> suggestionClients;
+  late TextEditingController searchController;
+  //=============================================
+
   @override
   void initState() {
     setState(() {
       suggestionClients = testDatabase;
       focusChange = false;
+      searchController = TextEditingController();
     });
     // TODO: implement initState
     super.initState();
@@ -110,17 +115,18 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
             children: [
               Focus(
                 onFocusChange: (hasFocus) {
-                  if (hasFocus) {
+                  if (hasFocus && searchController.text.isEmpty) {
                     setState(() {
                       focusChange = !focusChange;
                     });
-                  } else {
+                  } else if (!hasFocus && searchController.text.isEmpty) {
                     setState(() {
                       focusChange = false;
                     });
                   }
                 },
                 child: InputSearchComponent(
+                  searchController: searchController,
                   onChangedFunction: searchDinamically,
                   hintText: 'Digite o nome do cliente',
                 ),
@@ -140,7 +146,10 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
                   },
                 ),
                 child: Column(
-                  children: dateWidget,
+                  children: [
+                    ...dateWidget,
+                    const Text('Escolha um cliente para continuar'),
+                  ],
                 ),
               ),
             ],
