@@ -1,18 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 
+import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 class DataByDay extends StatelessWidget {
   final String? title;
   final List<ClientModel>? dataChildrens;
   final String valueData;
+  final bool haveChildrensNavigation;
   const DataByDay({
     Key? key,
     this.title,
     this.dataChildrens,
     required this.valueData,
+    this.haveChildrensNavigation = false,
   }) : super(key: key);
 
   @override
@@ -56,6 +58,7 @@ class DataByDay extends StatelessWidget {
                   return ClientComponent(
                     clientName: _myClient.name,
                     clientNumber: _myClient.number.toString(),
+                    haveNavigation: haveChildrensNavigation,
                   );
                 },
               ),

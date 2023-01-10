@@ -80,6 +80,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
         valueData: 'quarta',
         title: 'Quarta-feira',
         dataChildrens: testDatabase,
+        haveChildrensNavigation: true,
       ),
       const SizedBox(
         height: 30,

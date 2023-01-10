@@ -3,22 +3,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 class ClientComponent extends StatelessWidget {
   final String? clientName;
   final String? clientNumber;
   final bool editable;
+  final bool haveNavigation;
   const ClientComponent({
     Key? key,
     this.clientName,
     this.clientNumber,
     this.editable = false,
+    this.haveNavigation = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print('Clicou no widget!'),
+      onTap: () => haveNavigation ? Get.toNamed('/pedidos/clientes') : '',
       child: Container(
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),
@@ -62,6 +65,7 @@ class ClientComponent extends StatelessWidget {
                 Visibility(
                   visible: editable,
                   child: CircleAvatar(
+                    //TODO: adicionar evento de edição
                     backgroundColor: Colors.amber,
                     child: IconButton(
                       icon: const Icon(Icons.edit),
@@ -74,6 +78,7 @@ class ClientComponent extends StatelessWidget {
                   width: 20,
                 ),
                 CircleAvatar(
+                  //TODO: Adicionar evento de exclusão
                   backgroundColor: const Color.fromARGB(255, 254, 37, 37),
                   child: IconButton(
                     icon: const Icon(Icons.remove),
