@@ -3,11 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 
 import '../../models/ClientModel/ClientModel.dart';
+
+List<String> names = [
+  'marta da costa silva',
+  'maercio de sousa santos',
+  'josefino altos do morro',
+  'cristiano ronaldo da silva',
+  'antonio bandeira dos santos ',
+  'rodrigo dos santos'
+];
 
 class FazerPedidoPage extends StatefulWidget {
   const FazerPedidoPage({super.key});
@@ -17,45 +27,46 @@ class FazerPedidoPage extends StatefulWidget {
 }
 
 class _FazerPedidoPageState extends State<FazerPedidoPage> {
+  List<ClientModel> testDatabase = List.generate(
+    20,
+    (index) => ClientModel(
+        id: index,
+        name: names[Random().nextInt(names.length)],
+        number: 000000,
+        date: 'quarta'),
+  );
   late bool focusChange;
+  late List<ClientModel> suggestionClients;
   @override
   void initState() {
     setState(() {
+      suggestionClients = testDatabase;
       focusChange = false;
     });
     // TODO: implement initState
     super.initState();
   }
 
+  void searchDinamically(String query) {
+    final suggestion = testDatabase.where((client) {
+      final clientName = client.name.toLowerCase();
+      final input = query.toLowerCase();
+      return clientName.contains(input);
+    }).toList();
+    setState(() {
+      suggestionClients = suggestion;
+    });
+  }
+
+  //------------------
+
   @override
   Widget build(BuildContext context) {
-    //Testing
-    List<String> values = ['terca', 'quarta', 'quinta', 'sexta'];
-    List<String> names = [
-      'joao',
-      'maria',
-      'josefina',
-      'carlitos',
-      'santos',
-      'alexandremota'
-    ];
-
-    final List<ClientModel> _testDatabase = List.generate(
-      20,
-      (index) => ClientModel(
-        id: index,
-        name: names[Random().nextInt(names.length)],
-        number: 00000000,
-        date: values[Random().nextInt(values.length)],
-      ),
-    );
-
-    //------------------
     List<Widget> dateWidget = [
       DataByDay(
         valueData: 'terca',
         title: 'Terça-feira',
-        dataChildrens: _testDatabase,
+        dataChildrens: testDatabase,
       ),
       const SizedBox(
         height: 30,
@@ -63,7 +74,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'quarta',
         title: 'Quarta-feira',
-        dataChildrens: _testDatabase,
+        dataChildrens: testDatabase,
       ),
       const SizedBox(
         height: 30,
@@ -71,7 +82,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'quinta',
         title: 'Quinta-feira',
-        dataChildrens: _testDatabase,
+        dataChildrens: testDatabase,
       ),
       const SizedBox(
         height: 30,
@@ -79,7 +90,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'sexta',
         title: 'Sexta-feira',
-        dataChildrens: _testDatabase,
+        dataChildrens: testDatabase,
       ),
       const SizedBox(
         height: 30,
@@ -87,8 +98,10 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
     ];
 
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus
-          ?.unfocus(), // Desfocar ao clicar na tela,
+      onDoubleTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      // Desfocar ao clicar na tela,
       child: Scaffold(
         backgroundColor: const Color(0xFFE4E4E4),
         appBar: NavBarComponent(NavBarTitle: 'Realizar Pedidos'),
@@ -108,13 +121,23 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
                   }
                 },
                 child: InputSearchComponent(
+                  onChangedFunction: searchDinamically,
                   hintText: 'Digite o nome do cliente',
                 ),
               ),
               Visibility(
                 visible: !focusChange,
-                replacement: const Center(
-                  child: Text("Pesquisa ativada!"),
+                replacement: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: suggestionClients.length,
+                  itemBuilder: (context, index) {
+                    final ClientModel myClient = suggestionClients[index];
+                    return ClientComponent(
+                      clientName: myClient.name,
+                      clientNumber: myClient.number.toString(),
+                    );
+                  },
                 ),
                 child: Column(
                   children: dateWidget,

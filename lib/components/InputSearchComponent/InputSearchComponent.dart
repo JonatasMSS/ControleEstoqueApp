@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class InputSearchComponent extends StatelessWidget {
+class InputSearchComponent extends StatefulWidget {
   final TextEditingController? searchController;
   final String? hintText;
+  final Function(String)? onChangedFunction;
 
   const InputSearchComponent({
     Key? key,
     this.searchController,
     this.hintText,
+    this.onChangedFunction,
   }) : super(key: key);
 
+  @override
+  State<InputSearchComponent> createState() => _InputSearchComponentState();
+}
+
+class _InputSearchComponentState extends State<InputSearchComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,9 +35,10 @@ class InputSearchComponent extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       child: TextFormField(
-        controller: searchController,
+        onChanged: widget.onChangedFunction,
+        controller: widget.searchController,
         decoration: InputDecoration(
-          hintText: hintText,
+          hintText: widget.hintText,
           prefixIcon: const Icon(Icons.search),
           filled: true,
           contentPadding: const EdgeInsets.all(10),
