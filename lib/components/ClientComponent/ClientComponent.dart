@@ -17,71 +17,74 @@ class ClientComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(22),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              offset: Offset(1, 2),
-              blurRadius: 5,
-            )
-          ]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                clientName ?? 'NO DATA',
-                style: const TextStyle(
-                  fontSize: 17,
-                ),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(
-                clientNumber ?? '(00)0000-0000',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF686868),
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Visibility(
-                visible: editable,
-                child: CircleAvatar(
-                  backgroundColor: Colors.amber,
-                  child: IconButton(
-                    icon: const Icon(Icons.edit),
-                    onPressed: () => {},
-                    color: Colors.black,
+    return GestureDetector(
+      onTap: () => print('Clicou no widget!'),
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(22),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(1, 2),
+                blurRadius: 5,
+              )
+            ]),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  clientName ?? 'NO DATA',
+                  style: const TextStyle(
+                    fontSize: 17,
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 254, 37, 37),
-                child: IconButton(
-                  icon: const Icon(Icons.remove),
-                  onPressed: () => {},
-                  color: Colors.white,
+                const SizedBox(
+                  height: 4,
                 ),
-              )
-            ],
-          ),
-        ],
+                Text(
+                  clientNumber ?? '(00)0000-0000',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF686868),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Visibility(
+                  visible: editable,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.amber,
+                    child: IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () => {},
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                CircleAvatar(
+                  backgroundColor: const Color.fromARGB(255, 254, 37, 37),
+                  child: IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: () => {},
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
