@@ -4,8 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../../components/NavBar/NavBarComponent.dart';
 
-class PedidoToClientsPage extends StatelessWidget {
-  const PedidoToClientsPage({super.key});
+class PedidosToProdutosPage extends StatelessWidget {
+  const PedidosToProdutosPage({super.key});
 
   @override
   Widget build(BuildContext context) {
