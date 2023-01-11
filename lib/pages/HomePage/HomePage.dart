@@ -54,12 +54,13 @@ class _HomePageState extends State<HomePage> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 BigIconButton(
                   imageLocation: 'lib/assets/images/IconProducts.png',
                   description: 'Meus produtos',
+                  onClick: () => Get.toNamed('/produtos'),
                 ),
-                BigIconButton(
+                const BigIconButton(
                   imageLocation: 'lib/assets/images/IconConfig.png',
                   description: 'Configurações',
                 )

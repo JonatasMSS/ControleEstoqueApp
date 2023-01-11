@@ -4,6 +4,7 @@ import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
 import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
 import 'package:genilson_app/pages/PedidoToProdutosPage/PedidoToProdutosPage.dart';
+import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
 
 import 'package:get/get.dart';
 
@@ -26,7 +27,8 @@ class MainApp extends StatelessWidget {
         GetPage(name: '/pedidos', page: () => const FazerPedidoPage()),
         GetPage(
             name: '/pedidos/produtos',
-            page: () => const PedidosToProdutosPage())
+            page: () => const PedidosToProdutosPage()),
+        GetPage(name: '/produtos', page: () => const ProdutosPage()),
       ],
     );
   }
