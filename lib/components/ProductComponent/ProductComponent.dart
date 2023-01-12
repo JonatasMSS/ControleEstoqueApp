@@ -1,10 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class ProductComponent extends StatelessWidget {
-  const ProductComponent({super.key});
+  final String description;
+  final double unitValue;
+  final int quantity;
+  final int quantityCounter;
+  const ProductComponent({
+    Key? key,
+    this.description = 'NO DATA',
+    this.unitValue = 00.00,
+    this.quantity = 0,
+    this.quantityCounter = 0,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,26 +39,26 @@ class ProductComponent extends StatelessWidget {
             // TEXT SECTION
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'BOKUS SAL',
+                  description,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  'RS 23,00 UN',
+                  'RS $unitValue',
                   textScaleFactor: 1.1,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  'Em estoque: 4',
-                  style: TextStyle(
+                  'Em estoque: $quantity',
+                  style: const TextStyle(
                     color: Color.fromARGB(255, 66, 66, 66),
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.w300,
@@ -56,7 +67,7 @@ class ProductComponent extends StatelessWidget {
               ],
             ),
 
-            const CounterItem(),
+            CounterItem(quantity: quantityCounter),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -87,33 +98,58 @@ class ProductComponent extends StatelessWidget {
   }
 }
 
-class CounterItem extends StatelessWidget {
-  const CounterItem({super.key});
+// ignore: must_be_immutable
+class CounterItem extends StatefulWidget {
+  int quantity;
+  CounterItem({
+    Key? key,
+    required this.quantity,
+  }) : super(key: key);
 
+  @override
+  State<CounterItem> createState() => _CounterItemState();
+}
+
+class _CounterItemState extends State<CounterItem> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
-          CircleAvatar(
-            maxRadius: 15,
-            backgroundColor: Color(0xFFFF4747),
-            child: Icon(
-              Icons.remove,
-              color: Colors.white,
-              size: 27,
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                widget.quantity =
+                    widget.quantity <= 0 ? 0 : widget.quantity - 1;
+              });
+            },
+            child: const CircleAvatar(
+              maxRadius: 15,
+              backgroundColor: Color(0xFFFF4747),
+              child: Icon(
+                Icons.remove,
+                color: Colors.white,
+                size: 27,
+              ),
             ),
           ),
-          Text('4'),
-          CircleAvatar(
-            maxRadius: 15,
-            backgroundColor: Color(0xFF6AFF79),
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 27,
+          Text('${widget.quantity}'),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                widget.quantity = widget.quantity + 1;
+              });
+            },
+            child: const CircleAvatar(
+              maxRadius: 15,
+              backgroundColor: Color(0xFF6AFF79),
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 27,
+              ),
             ),
           ),
         ],

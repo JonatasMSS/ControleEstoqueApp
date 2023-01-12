@@ -11,6 +11,11 @@ class ProdutosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color(0xFF6AFF79),
+        onPressed: () => {},
+        child: const Icon(Icons.add),
+      ),
       appBar: NavBarComponent(
         NavBarTitle: 'Meus produtos',
       ),
