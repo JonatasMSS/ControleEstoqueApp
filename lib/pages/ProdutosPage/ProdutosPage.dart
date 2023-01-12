@@ -4,11 +4,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
+import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 import 'package:genilson_app/pages/ProdutosPage/Dialogs/product_add_dialog.dart';
 
-class ProdutosPage extends StatelessWidget {
-  const ProdutosPage({super.key});
+final ProductModel produto =
+    ProductModel(id: 0, name: 'name', price: 0, quantity: 2);
 
+class ProdutosPage extends StatelessWidget {
+  ProdutosPage({super.key});
+  final TextEditingController myText = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +23,10 @@ class ProdutosPage extends StatelessWidget {
             barrierDismissible: false,
             context: context,
             builder: (context) {
-              return const ProductAddDialog();
+              return ProductAddDialog(
+                produto: produto,
+                nameController: myText,
+              );
             },
           );
         },

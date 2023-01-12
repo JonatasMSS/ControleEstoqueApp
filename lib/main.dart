@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
         GetPage(
             name: '/pedidos/produtos',
             page: () => const PedidosToProdutosPage()),
-        GetPage(name: '/produtos', page: () => const ProdutosPage()),
+        GetPage(name: '/produtos', page: () => ProdutosPage()),
       ],
     );
   }
