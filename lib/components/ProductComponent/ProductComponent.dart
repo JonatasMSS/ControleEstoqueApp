@@ -3,18 +3,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatelessWidget {
+  //TODO: TRANSFORMAR VARIAVEIS PARA OBJETOS
   final String description;
   final double unitValue;
   final int quantity;
   final int quantityCounter;
+  final Function()? onClickEdit;
   const ProductComponent({
     Key? key,
     this.description = 'NO DATA',
     this.unitValue = 00.00,
     this.quantity = 0,
     this.quantityCounter = 0,
+    this.onClickEdit,
   }) : super(key: key);
 
   @override
@@ -71,8 +75,8 @@ class ProductComponent extends StatelessWidget {
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  CircleAvatar(
+                children: [
+                  const CircleAvatar(
                     backgroundColor: Color(0xFFFF4747),
                     maxRadius: 19,
                     child: Icon(
@@ -81,13 +85,16 @@ class ProductComponent extends StatelessWidget {
                       size: 18,
                     ),
                   ),
-                  CircleAvatar(
-                    backgroundColor: Colors.amber,
-                    maxRadius: 19,
-                    child: Icon(
-                      Icons.mode_edit_outline_outlined,
-                      color: Colors.black,
-                      size: 18,
+                  GestureDetector(
+                    onTap: onClickEdit,
+                    child: const CircleAvatar(
+                      backgroundColor: Colors.amber,
+                      maxRadius: 19,
+                      child: Icon(
+                        Icons.mode_edit_outline_outlined,
+                        color: Colors.black,
+                        size: 18,
+                      ),
                     ),
                   ),
                 ],

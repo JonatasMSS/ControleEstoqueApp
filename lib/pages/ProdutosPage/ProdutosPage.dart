@@ -5,6 +5,7 @@ import 'package:genilson_app/components/InputSearchComponent/InputSearchComponen
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
+import 'package:genilson_app/pages/ProdutosPage/Dialogs/edit_product_dialog.dart';
 import 'package:genilson_app/pages/ProdutosPage/Dialogs/product_add_dialog.dart';
 
 final ProductModel produto =
@@ -13,6 +14,16 @@ final ProductModel produto =
 class ProdutosPage extends StatelessWidget {
   ProdutosPage({super.key});
   final TextEditingController myText = TextEditingController();
+
+  void editProduct(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return EditDialog();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +34,7 @@ class ProdutosPage extends StatelessWidget {
             barrierDismissible: false,
             context: context,
             builder: (context) {
-              return ProductAddDialog(
-                produto: produto,
-                nameController: myText,
-              );
+              return const ProductAddDialog();
             },
           );
         },
@@ -38,11 +46,13 @@ class ProdutosPage extends StatelessWidget {
       backgroundColor: const Color(0xFFE4E4E4),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
+          children: [
             InputSearchComponent(
               hintText: 'Digite o nome do produto',
             ),
-            ProductComponent(),
+            ProductComponent(
+              onClickEdit: () => editProduct(context),
+            ),
           ],
         ),
       ),

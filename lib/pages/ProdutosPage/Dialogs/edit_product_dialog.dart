@@ -2,46 +2,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
+import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
 import 'package:get/get.dart';
 
-import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
-import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
-class ProductAddDialog extends StatefulWidget {
-  //TODO:NAME CONTROLLER SER UMA VARIAVEL CONTROLLER!
+import '../../../components/InputFormComponent/InputFormComponent.dart';
+import '../../../components/SimpleButtonC/SimpleButtonC.dart';
 
-  final TextEditingController? nameController;
-  final TextEditingController? quantityController;
-  final TextEditingController? priceController;
+class EditDialog extends StatefulWidget {
+  final ProductModel? produto;
 
-  const ProductAddDialog({
+  const EditDialog({
     Key? key,
-    this.nameController,
-    this.quantityController,
-    this.priceController,
+    this.produto,
   }) : super(key: key);
 
   @override
-  State<ProductAddDialog> createState() => _ProductAddDialogState();
+  State<EditDialog> createState() => _EditDialogState();
 }
 
-class _ProductAddDialogState extends State<ProductAddDialog> {
-  late Map<String, TextEditingController?> controllers;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    setState(() {
-      controllers = {
-        'nameC': widget.nameController,
-        'quantityC': widget.quantityController,
-        'priceC': widget.priceController,
-      };
-    });
-    super.initState();
-  }
+class _EditDialogState extends State<EditDialog> {
+  TextEditingController nameController =
+      TextEditingController(text: produto.name);
+  TextEditingController priceController =
+      TextEditingController(text: produto.price.toString());
+  TextEditingController quantityController =
+      TextEditingController(text: produto.quantity.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +55,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
           height: 7,
         ),
         InputFormComponent(
-          controller: controllers['nameC'],
+          controller: nameController,
           titleForm: 'Nome do produto',
           placeholder: 'Digite o nome do produto',
           fontSize: 1.5,
@@ -81,7 +68,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
           children: [
             Expanded(
               child: InputFormComponent(
-                controller: controllers['quantityC'],
+                controller: quantityController,
                 titleForm: 'Quantidade',
                 placeholder: 'Em estoque',
                 fontSize: 1.5,
@@ -90,7 +77,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
             ),
             Expanded(
               child: InputFormComponent(
-                controller: controllers['priceC'],
+                controller: priceController,
                 titleForm: 'Preco unitário',
                 placeholder: 'Valor unitário',
                 type: TextInputType.number,
