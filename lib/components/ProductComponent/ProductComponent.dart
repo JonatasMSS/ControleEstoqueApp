@@ -3,21 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatelessWidget {
   //TODO: TRANSFORMAR VARIAVEIS PARA OBJETOS
-  final String description;
-  final double unitValue;
-  final int quantity;
+
   final int quantityCounter;
+  final ProductModel? produto;
   final Function()? onClickEdit;
   const ProductComponent({
     Key? key,
-    this.description = 'NO DATA',
-    this.unitValue = 00.00,
-    this.quantity = 0,
     this.quantityCounter = 0,
+    this.produto,
     this.onClickEdit,
   }) : super(key: key);
 
@@ -45,13 +43,13 @@ class ProductComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  description,
+                  produto?.name ?? 'NO DATA',
                 ),
                 const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  'RS $unitValue',
+                  'RS ${produto?.price ?? 0.00} UN',
                   textScaleFactor: 1.1,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -61,7 +59,7 @@ class ProductComponent extends StatelessWidget {
                   height: 2,
                 ),
                 Text(
-                  'Em estoque: $quantity',
+                  'Em estoque: ${produto?.quantity ?? 0}',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 66, 66, 66),
                     fontStyle: FontStyle.italic,

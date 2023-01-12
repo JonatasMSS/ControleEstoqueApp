@@ -9,17 +9,19 @@ import 'package:genilson_app/pages/ProdutosPage/Dialogs/edit_product_dialog.dart
 import 'package:genilson_app/pages/ProdutosPage/Dialogs/product_add_dialog.dart';
 
 final ProductModel produto =
-    ProductModel(id: 0, name: 'name', price: 0, quantity: 2);
+    ProductModel(id: 0, name: 'TRELOSO', price: 23.50, quantity: 10);
 
 class ProdutosPage extends StatelessWidget {
   ProdutosPage({super.key});
   final TextEditingController myText = TextEditingController();
 
-  void editProduct(BuildContext context) {
+  void editProduct(BuildContext context, ProductModel model) {
     showDialog(
       context: context,
       builder: (context) {
-        return EditDialog();
+        return EditDialog(
+          produto: model,
+        );
       },
     );
   }
@@ -51,7 +53,8 @@ class ProdutosPage extends StatelessWidget {
               hintText: 'Digite o nome do produto',
             ),
             ProductComponent(
-              onClickEdit: () => editProduct(context),
+              produto: produto,
+              onClickEdit: () => editProduct(context, produto),
             ),
           ],
         ),

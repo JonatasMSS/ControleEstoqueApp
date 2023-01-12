@@ -36,14 +36,14 @@ class _EditDialogState extends State<EditDialog> {
       titlePadding: const EdgeInsets.all(0),
       title: Container(
         decoration: const BoxDecoration(
-          color: Colors.blue,
+          color: Colors.amber,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(3), topRight: Radius.circular(3)),
         ),
         padding: const EdgeInsets.all(20),
         child: const Center(
           child: Text(
-            'Adicionar novo produto',
+            'Editar produto',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -97,7 +97,7 @@ class _EditDialogState extends State<EditDialog> {
             Expanded(
               child: SimpleButtonC(
                 primary: true,
-                text: 'Confirmar',
+                text: 'Editar',
                 onClick: () => Get.back(),
               ),
             ),
