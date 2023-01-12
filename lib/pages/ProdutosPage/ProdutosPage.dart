@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
+import 'package:genilson_app/pages/ProdutosPage/Dialogs/product_add_dialog.dart';
 
 class ProdutosPage extends StatelessWidget {
   const ProdutosPage({super.key});
@@ -13,7 +14,15 @@ class ProdutosPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF6AFF79),
-        onPressed: () => {},
+        onPressed: () {
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              return const ProductAddDialog();
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
       appBar: NavBarComponent(

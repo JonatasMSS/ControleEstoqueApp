@@ -9,6 +9,7 @@ class InputFormComponent extends StatelessWidget {
   final String? placeholder;
   final TextEditingController? controller;
   final TextInputType? type;
+  final double fontSize;
 
   const InputFormComponent({
     Key? key,
@@ -16,6 +17,7 @@ class InputFormComponent extends StatelessWidget {
     this.placeholder,
     this.controller,
     this.type,
+    this.fontSize = 1.8,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class InputFormComponent extends StatelessWidget {
         children: [
           Text(
             titleForm ?? 'NO DATA',
-            textScaleFactor: 1.8,
+            textScaleFactor: fontSize,
           ),
           TextFormField(
             controller: controller,
