@@ -9,13 +9,13 @@ import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 class ProductComponent extends StatelessWidget {
   //TODO: TRANSFORMAR VARIAVEIS PARA OBJETOS
 
-  final int quantityCounter;
+  final double priceQuantityTotal;
   final ProductModel? produto;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
   const ProductComponent({
     Key? key,
-    this.quantityCounter = 0,
+    this.priceQuantityTotal = 0,
     this.produto,
     this.onClickEdit,
     this.onClickRemove,
@@ -74,7 +74,10 @@ class ProductComponent extends StatelessWidget {
               ),
             ),
 
-            CounterItem(quantity: quantityCounter),
+            CounterItem(
+              productPrice: produto!.price,
+              productQuantity: produto!.quantity,
+            ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,10 +116,12 @@ class ProductComponent extends StatelessWidget {
 
 // ignore: must_be_immutable
 class CounterItem extends StatefulWidget {
-  int quantity;
-  CounterItem({
+  final double productPrice;
+  final int productQuantity;
+  const CounterItem({
     Key? key,
-    required this.quantity,
+    this.productPrice = 0,
+    this.productQuantity = 0,
   }) : super(key: key);
 
   @override
@@ -124,6 +129,15 @@ class CounterItem extends StatefulWidget {
 }
 
 class _CounterItemState extends State<CounterItem> {
+  late int quantity;
+
+  @override
+  void initState() {
+    quantity = 0;
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -134,8 +148,7 @@ class _CounterItemState extends State<CounterItem> {
           GestureDetector(
             onTap: () {
               setState(() {
-                widget.quantity =
-                    widget.quantity <= 0 ? 0 : widget.quantity - 1;
+                quantity = quantity <= 0 ? 0 : quantity - 1;
               });
             },
             child: const CircleAvatar(
@@ -148,11 +161,12 @@ class _CounterItemState extends State<CounterItem> {
               ),
             ),
           ),
-          Text('${widget.quantity}'),
+          Text('$quantity'),
           GestureDetector(
             onTap: () {
               setState(() {
-                widget.quantity = widget.quantity + 1;
+                quantity =
+                    quantity < widget.productQuantity ? quantity + 1 : quantity;
               });
             },
             child: const CircleAvatar(
