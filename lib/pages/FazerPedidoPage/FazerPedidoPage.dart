@@ -29,7 +29,7 @@ class FazerPedidoPage extends StatefulWidget {
 class _FazerPedidoPageState extends State<FazerPedidoPage> {
   //Variaveis
   List<ClientModel> testDatabase = List.generate(
-    5,
+    2,
     (index) => ClientModel(
         id: index,
         name: names[Random().nextInt(names.length)],

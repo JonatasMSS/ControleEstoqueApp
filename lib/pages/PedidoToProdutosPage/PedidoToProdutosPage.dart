@@ -24,6 +24,34 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton.extended(
+              label: Container(
+                alignment: Alignment.center,
+                constraints: const BoxConstraints(
+                  minWidth: 110,
+                ),
+                child: const Text('Valor total: RS 0,00'),
+              ),
+              onPressed: () => {},
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            FloatingActionButton.extended(
+              heroTag: null,
+              icon: const Icon(Icons.check),
+              label: const Text(
+                'Confirmar pedido',
+                textScaleFactor: 1.4,
+              ),
+              backgroundColor: const Color(0xFF6AFF79),
+              onPressed: () {},
+            ),
+          ],
+        ),
         backgroundColor: const Color(0xFFE4E4E4),
         appBar: NavBarComponent(NavBarTitle: 'Realizar Pedidos'),
         body: SingleChildScrollView(
@@ -34,6 +62,7 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
               ),
               ListView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: testDatabase.length,
                 itemBuilder: (context, index) {
                   final ProductModel produto = testDatabase[index];
@@ -41,6 +70,9 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                     produto: produto,
                   );
                 },
+              ),
+              const SizedBox(
+                height: 100,
               ),
             ],
           ),

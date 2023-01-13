@@ -13,7 +13,7 @@ import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 class ClientesPage extends StatelessWidget {
   const ClientesPage({super.key});
-
+  //TODO: ADICIONAR EVENTO DE EXCLUSÃO
   @override
   Widget build(BuildContext context) {
     List<String> values = ['terca', 'quarta', 'quinta', 'sexta'];
