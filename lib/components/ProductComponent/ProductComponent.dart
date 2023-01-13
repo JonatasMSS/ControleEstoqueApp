@@ -7,18 +7,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatelessWidget {
-  //TODO: TRANSFORMAR VARIAVEIS PARA OBJETOS
-
-  final double priceQuantityTotal;
   final ProductModel? produto;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
+  final bool isEditable;
   const ProductComponent({
     Key? key,
-    this.priceQuantityTotal = 0,
     this.produto,
     this.onClickEdit,
     this.onClickRemove,
+    this.isEditable = false,
   }) : super(key: key);
 
   @override
@@ -77,11 +75,21 @@ class ProductComponent extends StatelessWidget {
             CounterItem(
               productPrice: produto!.price,
               productQuantity: produto!.quantity,
+              isEditable: isEditable,
             ),
             Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: isEditable
+                    ? MainAxisAlignment.spaceEvenly
+                    : MainAxisAlignment.spaceBetween,
                 children: [
+                  Visibility(
+                    visible: !isEditable,
+                    child: Text('RS ${produto?.quantityMultplied ?? 0.0}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
                   GestureDetector(
                     onTap: onClickRemove,
                     child: const CircleAvatar(
@@ -94,18 +102,21 @@ class ProductComponent extends StatelessWidget {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: onClickEdit,
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.amber,
-                      maxRadius: 19,
-                      child: Icon(
-                        Icons.mode_edit_outline_outlined,
-                        color: Colors.black,
-                        size: 18,
+                  Visibility(
+                    visible: isEditable,
+                    child: GestureDetector(
+                      onTap: onClickEdit,
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        maxRadius: 19,
+                        child: Icon(
+                          Icons.mode_edit_outline_outlined,
+                          color: Colors.black,
+                          size: 18,
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             )
@@ -118,10 +129,12 @@ class ProductComponent extends StatelessWidget {
 class CounterItem extends StatefulWidget {
   final double productPrice;
   final int productQuantity;
+  final bool isEditable;
   const CounterItem({
     Key? key,
     this.productPrice = 0,
     this.productQuantity = 0,
+    required this.isEditable,
   }) : super(key: key);
 
   @override
@@ -165,8 +178,11 @@ class _CounterItemState extends State<CounterItem> {
           GestureDetector(
             onTap: () {
               setState(() {
-                quantity =
-                    quantity < widget.productQuantity ? quantity + 1 : quantity;
+                quantity = widget.isEditable
+                    ? quantity + 1
+                    : quantity < widget.productQuantity
+                        ? quantity + 1
+                        : quantity;
               });
             },
             child: const CircleAvatar(
