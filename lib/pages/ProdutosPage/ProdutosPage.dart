@@ -35,15 +35,8 @@ class _ProdutosPageState extends State<ProdutosPage> {
   void initState() {
     testDatabase = [
       ProductModel(id: 0, name: 'BOKUS', price: 3.50, quantity: 2),
-      ProductModel(id: 1, name: 'TRELOSO', price: 8.50, quantity: 10),
-      ProductModel(id: 2, name: 'AMENDOIN', price: 0.50, quantity: 10),
-      ProductModel(
-          id: 2, name: 'PACOCAO COM MEDALHAS', price: 0.50, quantity: 10),
-      ProductModel(id: 0, name: 'BOKUS', price: 3.50, quantity: 2),
-      ProductModel(id: 1, name: 'TRELOSO', price: 8.50, quantity: 10),
-      ProductModel(id: 2, name: 'AMENDOIN', price: 0.50, quantity: 10),
-      ProductModel(
-          id: 2, name: 'PACOCAO COM MEDALHAS', price: 0.50, quantity: 10),
+      ProductModel(id: 1, name: 'TRELOSO', price: 2.50, quantity: 10),
+      ProductModel(id: 2, name: 'PACOCA', price: 10.50, quantity: 5),
     ];
     // TODO: implement initState
     super.initState();
@@ -83,6 +76,7 @@ class _ProdutosPageState extends State<ProdutosPage> {
                 final ProductModel produto = testDatabase[index];
                 return ProductComponent(
                     produto: produto,
+                    isEditable: false,
                     onClickEdit: () => editProduct(context, produto),
                     onClickRemove: () {
                       setState(() {

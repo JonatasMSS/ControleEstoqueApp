@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -6,7 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
-class ProductComponent extends StatelessWidget {
+class ProductComponent extends StatefulWidget {
   final ProductModel? produto;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
@@ -18,6 +20,21 @@ class ProductComponent extends StatelessWidget {
     this.onClickRemove,
     this.isEditable = false,
   }) : super(key: key);
+
+  @override
+  State<ProductComponent> createState() => _ProductComponentState();
+}
+
+class _ProductComponentState extends State<ProductComponent> {
+  double quantityMultiplied = 0;
+  late int quantity;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    quantity = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +61,14 @@ class ProductComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    produto?.name ?? 'NO DATA',
+                    widget.produto?.name ?? 'NO DATA',
                     softWrap: true,
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
-                    'RS ${produto?.price ?? 0.00} UN',
+                    'RS ${widget.produto!.price} UN',
                     textScaleFactor: 1.1,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -61,7 +78,7 @@ class ProductComponent extends StatelessWidget {
                     height: 2,
                   ),
                   Text(
-                    'Em estoque: ${produto?.quantity ?? 0}',
+                    'Em estoque: ${widget.produto?.quantity ?? 0}',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 66, 66, 66),
                       fontStyle: FontStyle.italic,
@@ -72,40 +89,62 @@ class ProductComponent extends StatelessWidget {
               ),
             ),
 
-            CounterItem(
-              productPrice: produto!.price,
-              productQuantity: produto!.quantity,
-              isEditable: isEditable,
+            Visibility(
+              visible: !widget.isEditable,
+              child: CounterItem(
+                localPriceVar: quantityMultiplied,
+                produto: widget.produto,
+                quantity: quantity,
+                isEditable: widget.isEditable,
+                onTapAdd: () {
+                  setState(() {
+                    quantity = quantity < widget.produto!.quantity
+                        ? quantity += 1
+                        : quantity;
+
+                    quantityMultiplied = widget.produto!.price * quantity;
+                  });
+                },
+                onTapLess: () {
+                  setState(() {
+                    quantity = quantity <= 0 ? 0 : quantity -= 1;
+                    quantityMultiplied = widget.produto!.price * quantity;
+                  });
+                },
+              ),
             ),
             Expanded(
               child: Row(
-                mainAxisAlignment: isEditable
+                mainAxisAlignment: widget.isEditable
                     ? MainAxisAlignment.spaceEvenly
-                    : MainAxisAlignment.spaceBetween,
+                    : MainAxisAlignment.center,
                 children: [
                   Visibility(
-                    visible: !isEditable,
-                    child: Text('RS ${produto?.quantityMultplied ?? 0.0}',
+                    visible: !widget.isEditable,
+                    child: Text('RS ${quantityMultiplied.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         )),
                   ),
-                  GestureDetector(
-                    onTap: onClickRemove,
-                    child: const CircleAvatar(
-                      backgroundColor: Color(0xFFFF4747),
-                      maxRadius: 19,
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                        size: 18,
+                  Visibility(
+                    visible: widget.isEditable,
+                    child: GestureDetector(
+                      onTap: widget.onClickRemove,
+                      child: const CircleAvatar(
+                        backgroundColor: Color(0xFFFF4747),
+                        maxRadius: 19,
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                       ),
                     ),
                   ),
                   Visibility(
-                    visible: isEditable,
+                    visible: widget.isEditable,
                     child: GestureDetector(
-                      onTap: onClickEdit,
+                      onTap: widget.onClickEdit,
                       child: const CircleAvatar(
                         backgroundColor: Colors.amber,
                         maxRadius: 19,
@@ -127,14 +166,20 @@ class ProductComponent extends StatelessWidget {
 
 // ignore: must_be_immutable
 class CounterItem extends StatefulWidget {
-  final double productPrice;
-  final int productQuantity;
+  ProductModel? produto;
+  double localPriceVar;
+  final int quantity;
   final bool isEditable;
-  const CounterItem({
+  final Function()? onTapAdd;
+  final Function()? onTapLess;
+  CounterItem({
     Key? key,
-    this.productPrice = 0,
-    this.productQuantity = 0,
+    this.produto,
+    required this.localPriceVar,
+    this.quantity = 0,
     required this.isEditable,
+    this.onTapAdd,
+    this.onTapLess,
   }) : super(key: key);
 
   @override
@@ -142,11 +187,8 @@ class CounterItem extends StatefulWidget {
 }
 
 class _CounterItemState extends State<CounterItem> {
-  late int quantity;
-
   @override
   void initState() {
-    quantity = 0;
     // TODO: implement initState
     super.initState();
   }
@@ -159,11 +201,7 @@ class _CounterItemState extends State<CounterItem> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
-            onTap: () {
-              setState(() {
-                quantity = quantity <= 0 ? 0 : quantity - 1;
-              });
-            },
+            onTap: widget.onTapLess,
             child: const CircleAvatar(
               maxRadius: 15,
               backgroundColor: Color(0xFFFF4747),
@@ -174,17 +212,9 @@ class _CounterItemState extends State<CounterItem> {
               ),
             ),
           ),
-          Text('$quantity'),
+          Text('${widget.quantity}'),
           GestureDetector(
-            onTap: () {
-              setState(() {
-                quantity = widget.isEditable
-                    ? quantity + 1
-                    : quantity < widget.productQuantity
-                        ? quantity + 1
-                        : quantity;
-              });
-            },
+            onTap: widget.onTapAdd,
             child: const CircleAvatar(
               maxRadius: 15,
               backgroundColor: Color(0xFF6AFF79),
