@@ -12,11 +12,13 @@ class ProductComponent extends StatelessWidget {
   final int quantityCounter;
   final ProductModel? produto;
   final Function()? onClickEdit;
+  final Function()? onClickRemove;
   const ProductComponent({
     Key? key,
     this.quantityCounter = 0,
     this.produto,
     this.onClickEdit,
+    this.onClickRemove,
   }) : super(key: key);
 
   @override
@@ -39,34 +41,37 @@ class ProductComponent extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // TEXT SECTION
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  produto?.name ?? 'NO DATA',
-                ),
-                const SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  'RS ${produto?.price ?? 0.00} UN',
-                  textScaleFactor: 1.1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    produto?.name ?? 'NO DATA',
+                    softWrap: true,
                   ),
-                ),
-                const SizedBox(
-                  height: 2,
-                ),
-                Text(
-                  'Em estoque: ${produto?.quantity ?? 0}',
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 66, 66, 66),
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.w300,
+                  const SizedBox(
+                    height: 2,
                   ),
-                )
-              ],
+                  Text(
+                    'RS ${produto?.price ?? 0.00} UN',
+                    textScaleFactor: 1.1,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    'Em estoque: ${produto?.quantity ?? 0}',
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 66, 66, 66),
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  )
+                ],
+              ),
             ),
 
             CounterItem(quantity: quantityCounter),
@@ -74,13 +79,16 @@ class ProductComponent extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const CircleAvatar(
-                    backgroundColor: Color(0xFFFF4747),
-                    maxRadius: 19,
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                      size: 18,
+                  GestureDetector(
+                    onTap: onClickRemove,
+                    child: const CircleAvatar(
+                      backgroundColor: Color(0xFFFF4747),
+                      maxRadius: 19,
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                     ),
                   ),
                   GestureDetector(

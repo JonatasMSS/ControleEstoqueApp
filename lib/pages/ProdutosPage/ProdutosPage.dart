@@ -8,11 +8,14 @@ import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 import 'package:genilson_app/pages/ProdutosPage/Dialogs/edit_product_dialog.dart';
 import 'package:genilson_app/pages/ProdutosPage/Dialogs/product_add_dialog.dart';
 
-final ProductModel produto =
-    ProductModel(id: 0, name: 'TRELOSO', price: 23.50, quantity: 10);
+class ProdutosPage extends StatefulWidget {
+  const ProdutosPage({super.key});
 
-class ProdutosPage extends StatelessWidget {
-  ProdutosPage({super.key});
+  @override
+  State<ProdutosPage> createState() => _ProdutosPageState();
+}
+
+class _ProdutosPageState extends State<ProdutosPage> {
   final TextEditingController myText = TextEditingController();
 
   void editProduct(BuildContext context, ProductModel model) {
@@ -24,6 +27,26 @@ class ProdutosPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  late List<ProductModel> testDatabase;
+
+  @override
+  void initState() {
+    testDatabase = [
+      ProductModel(id: 0, name: 'BOKUS', price: 3.50, quantity: 2),
+      ProductModel(id: 1, name: 'TRELOSO', price: 8.50, quantity: 10),
+      ProductModel(id: 2, name: 'AMENDOIN', price: 0.50, quantity: 10),
+      ProductModel(
+          id: 2, name: 'PACOCAO COM MEDALHAS', price: 0.50, quantity: 10),
+      ProductModel(id: 0, name: 'BOKUS', price: 3.50, quantity: 2),
+      ProductModel(id: 1, name: 'TRELOSO', price: 8.50, quantity: 10),
+      ProductModel(id: 2, name: 'AMENDOIN', price: 0.50, quantity: 10),
+      ProductModel(
+          id: 2, name: 'PACOCAO COM MEDALHAS', price: 0.50, quantity: 10),
+    ];
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -49,12 +72,27 @@ class ProdutosPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            InputSearchComponent(
+            const InputSearchComponent(
               hintText: 'Digite o nome do produto',
             ),
-            ProductComponent(
-              produto: produto,
-              onClickEdit: () => editProduct(context, produto),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: testDatabase.length,
+              itemBuilder: (context, index) {
+                final ProductModel produto = testDatabase[index];
+                return ProductComponent(
+                    produto: produto,
+                    onClickEdit: () => editProduct(context, produto),
+                    onClickRemove: () {
+                      setState(() {
+                        testDatabase.removeAt(index);
+                      });
+                    });
+              },
+            ),
+            const SizedBox(
+              height: 100,
             ),
           ],
         ),

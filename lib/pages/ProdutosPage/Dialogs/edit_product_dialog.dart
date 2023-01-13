@@ -11,11 +11,11 @@ import '../../../components/InputFormComponent/InputFormComponent.dart';
 import '../../../components/SimpleButtonC/SimpleButtonC.dart';
 
 class EditDialog extends StatefulWidget {
-  final ProductModel? produto;
+  final ProductModel produto;
 
   const EditDialog({
     Key? key,
-    this.produto,
+    required this.produto,
   }) : super(key: key);
 
   @override
@@ -23,12 +23,19 @@ class EditDialog extends StatefulWidget {
 }
 
 class _EditDialogState extends State<EditDialog> {
-  TextEditingController nameController =
-      TextEditingController(text: produto.name);
-  TextEditingController priceController =
-      TextEditingController(text: produto.price.toString());
-  TextEditingController quantityController =
-      TextEditingController(text: produto.quantity.toString());
+  late TextEditingController nameController;
+  late TextEditingController quantityController;
+  late TextEditingController priceController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    nameController = TextEditingController(text: widget.produto.name);
+    quantityController =
+        TextEditingController(text: widget.produto.quantity.toString());
+    priceController =
+        TextEditingController(text: widget.produto.price.toString());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
