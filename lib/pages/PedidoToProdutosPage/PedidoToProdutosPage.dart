@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,13 +24,23 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
     ProductModel(id: 2, name: 'Paçoca', price: 0.5, quantity: 5),
   ];
   late List<OrderModel> pageOrder;
+  late double valorTotal;
   @override
   void initState() {
     // TODO: implement initState
     setState(() {
       pageOrder = [];
+      valorTotal = 0;
     });
     super.initState();
+  }
+
+  void returnValueTotal() {
+    final sum = pageOrder.fold<double>(
+        0, (previousValue, element) => previousValue + element.priceMultiplied);
+    setState(() {
+      valorTotal = sum;
+    });
   }
 
   @override
@@ -43,7 +55,7 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                 constraints: const BoxConstraints(
                   minWidth: 110,
                 ),
-                child: Text('Valor total: 10,00'),
+                child: Text('Valor total: ${valorTotal.toStringAsFixed(2)}'),
               ),
               onPressed: () => {},
             ),
@@ -78,6 +90,8 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                   final ProductModel produto = testDatabase[index];
                   return ProductComponent(
                     produto: produto,
+                    orderPage: pageOrder,
+                    changeSumationOnPage: returnValueTotal,
                   );
                 },
               ),

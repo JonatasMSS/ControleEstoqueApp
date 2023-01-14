@@ -5,8 +5,8 @@ import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class OrderModel {
   final ProductModel product;
-  final int quantity;
-  final double priceMultiplied;
+  int quantity;
+  double priceMultiplied;
   OrderModel({
     required this.product,
     required this.quantity,

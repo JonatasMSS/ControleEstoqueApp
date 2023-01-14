@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -10,15 +12,17 @@ import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatefulWidget {
-  final ProductModel? produto;
-  final OrderModel? orderPage;
+  final ProductModel produto;
+  List<OrderModel>? orderPage;
+  final Function()? changeSumationOnPage;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
   final bool isEditable;
   ProductComponent({
     Key? key,
-    this.produto,
+    required this.produto,
     this.orderPage,
+    this.changeSumationOnPage,
     this.onClickEdit,
     this.onClickRemove,
     this.isEditable = false,
@@ -33,9 +37,67 @@ class _ProductComponentState extends State<ProductComponent> {
   @override
   void initState() {
     // TODO: implement initState
-    widget.produto!.quantityMultplied = 0;
+    widget.produto.quantityMultplied = 0;
     quantity = 0;
     super.initState();
+  }
+
+  void addToOrder() {
+    final bool isInside =
+        widget.orderPage?.any((order) => order.product == widget.produto) ??
+            false;
+    if (isInside) {
+      final int index = widget.orderPage
+              ?.indexWhere((order) => order.product == widget.produto) ??
+          -2;
+      setState(() {
+        widget.orderPage?[index] = OrderModel(
+            product: widget.produto,
+            quantity: quantity,
+            priceMultiplied: widget.produto.quantityMultplied);
+      });
+    } else {
+      final OrderModel newOrder = OrderModel(
+          product: widget.produto,
+          quantity: quantity,
+          priceMultiplied: widget.produto.quantityMultplied);
+      setState(() {
+        widget.orderPage?.add(newOrder);
+      });
+    }
+  }
+
+  void removeFromOrder() {
+    final int index = widget.orderPage
+            ?.indexWhere((order) => order.product == widget.produto) ??
+        -1;
+    if (index >= 0) {
+      setState(() {
+        widget.orderPage?.removeAt(index);
+      });
+    }
+  }
+
+  void addQuantity() {
+    setState(() {
+      if (quantity < widget.produto.quantity) {
+        quantity += 1;
+      } else {
+        quantity = quantity;
+      }
+      widget.produto.quantityMultplied = widget.produto.price * quantity;
+    });
+  }
+
+  void lessQuantity() {
+    setState(() {
+      if (quantity <= 0) {
+        quantity = 0;
+      } else {
+        quantity -= 1;
+      }
+      widget.produto.quantityMultplied = widget.produto.price * quantity;
+    });
   }
 
   @override
@@ -63,14 +125,14 @@ class _ProductComponentState extends State<ProductComponent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.produto?.name ?? 'NO DATA',
+                    widget.produto.name,
                     softWrap: true,
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
-                    'RS ${widget.produto!.price} UN',
+                    'RS ${widget.produto.price} UN',
                     textScaleFactor: 1.1,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -80,7 +142,7 @@ class _ProductComponentState extends State<ProductComponent> {
                     height: 2,
                   ),
                   Text(
-                    'Em estoque: ${widget.produto?.quantity ?? 0}',
+                    'Em estoque: ${widget.produto.quantity}',
                     style: const TextStyle(
                       color: Color.fromARGB(255, 66, 66, 66),
                       fontStyle: FontStyle.italic,
@@ -94,20 +156,17 @@ class _ProductComponentState extends State<ProductComponent> {
             Visibility(
               visible: !widget.isEditable,
               child: CounterItem(
-                localPriceVar: widget.produto!.quantityMultplied,
+                localPriceVar: widget.produto.quantityMultplied,
                 produto: widget.produto,
                 quantity: quantity,
                 isEditable: widget.isEditable,
                 onTapAdd: () {
-                  setState(() {
-                    if (quantity < widget.produto!.quantity) {
-                      quantity += 1;
-                    } else {
-                      quantity = quantity;
-                    }
-                    widget.produto!.quantityMultplied =
-                        widget.produto!.price * quantity;
-                  });
+                  addQuantity();
+                  addToOrder();
+                  if (widget.changeSumationOnPage != null) {
+                    widget.changeSumationOnPage!();
+                  }
+
                   // setState(() {
                   //   quantity = quantity < widget.produto!.quantity
                   //       ? quantity += 1
@@ -118,11 +177,15 @@ class _ProductComponentState extends State<ProductComponent> {
                   // });
                 },
                 onTapLess: () {
-                  setState(() {
-                    quantity = quantity <= 0 ? 0 : quantity -= 1;
-                    widget.produto!.quantityMultplied =
-                        widget.produto!.price * quantity;
-                  });
+                  lessQuantity();
+                  if (quantity > 0) {
+                    addToOrder();
+                  } else {
+                    removeFromOrder();
+                  }
+                  if (widget.changeSumationOnPage != null) {
+                    widget.changeSumationOnPage!();
+                  }
                 },
               ),
             ),
@@ -135,7 +198,7 @@ class _ProductComponentState extends State<ProductComponent> {
                   Visibility(
                     visible: !widget.isEditable,
                     child: Text(
-                        'RS ${widget.produto!.quantityMultplied.toStringAsFixed(2)}',
+                        'RS ${widget.produto.quantityMultplied.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         )),
