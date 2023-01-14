@@ -6,20 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatefulWidget {
   final ProductModel? produto;
-  final Function()? onQuantityAdd;
-  final Function()? onQuantitySubtract;
+  final OrderModel? orderPage;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
   final bool isEditable;
   ProductComponent({
     Key? key,
     this.produto,
-    this.onQuantityAdd,
-    this.onQuantitySubtract,
+    this.orderPage,
     this.onClickEdit,
     this.onClickRemove,
     this.isEditable = false,
@@ -101,14 +100,22 @@ class _ProductComponentState extends State<ProductComponent> {
                 isEditable: widget.isEditable,
                 onTapAdd: () {
                   setState(() {
-                    quantity = quantity < widget.produto!.quantity
-                        ? quantity += 1
-                        : quantity;
-
+                    if (quantity < widget.produto!.quantity) {
+                      quantity += 1;
+                    } else {
+                      quantity = quantity;
+                    }
                     widget.produto!.quantityMultplied =
                         widget.produto!.price * quantity;
                   });
-                  widget.onQuantityAdd;
+                  // setState(() {
+                  //   quantity = quantity < widget.produto!.quantity
+                  //       ? quantity += 1
+                  //       : quantity;
+
+                  //   widget.produto!.quantityMultplied =
+                  //       widget.produto!.price * quantity;
+                  // });
                 },
                 onTapLess: () {
                   setState(() {
@@ -116,7 +123,6 @@ class _ProductComponentState extends State<ProductComponent> {
                     widget.produto!.quantityMultplied =
                         widget.produto!.price * quantity;
                   });
-                  widget.onQuantitySubtract;
                 },
               ),
             ),

@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
+import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 import '../../components/NavBar/NavBarComponent.dart';
@@ -18,15 +19,15 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   List<ProductModel> testDatabase = [
     ProductModel(id: 0, name: 'Treloso', price: 23.50, quantity: 3),
     ProductModel(id: 1, name: 'Amendoim', price: 0.5, quantity: 2),
-    ProductModel(
-        id: 2, name: 'Paçoca', price: 0.5, quantity: 5, quantityMultplied: 20),
+    ProductModel(id: 2, name: 'Paçoca', price: 0.5, quantity: 5),
   ];
-  double sumTotal = 0;
-
+  late List<OrderModel> pageOrder;
   @override
   void initState() {
     // TODO: implement initState
-    setState(() {});
+    setState(() {
+      pageOrder = [];
+    });
     super.initState();
   }
 
@@ -42,7 +43,7 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                 constraints: const BoxConstraints(
                   minWidth: 110,
                 ),
-                child: Text('Valor total: RS ${sumTotal.toStringAsFixed(2)}'),
+                child: Text('Valor total: 10,00'),
               ),
               onPressed: () => {},
             ),
@@ -77,14 +78,6 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                   final ProductModel produto = testDatabase[index];
                   return ProductComponent(
                     produto: produto,
-                    onQuantityAdd: () => setState(() {
-                      print(sumTotal);
-                      sumTotal += produto.quantityMultplied;
-                    }),
-                    onQuantitySubtract: () => setState(() {
-                      print(sumTotal);
-                      sumTotal -= produto.quantityMultplied;
-                    }),
                   );
                 },
               ),
