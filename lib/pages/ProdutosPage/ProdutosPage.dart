@@ -76,7 +76,7 @@ class _ProdutosPageState extends State<ProdutosPage> {
                 final ProductModel produto = testDatabase[index];
                 return ProductComponent(
                     produto: produto,
-                    isEditable: false,
+                    isEditable: true,
                     onClickEdit: () => editProduct(context, produto),
                     onClickRemove: () {
                       setState(() {

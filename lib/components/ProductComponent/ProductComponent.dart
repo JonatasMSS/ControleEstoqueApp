@@ -10,12 +10,16 @@ import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 class ProductComponent extends StatefulWidget {
   final ProductModel? produto;
+  final Function()? onQuantityAdd;
+  final Function()? onQuantitySubtract;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
   final bool isEditable;
-  const ProductComponent({
+  ProductComponent({
     Key? key,
     this.produto,
+    this.onQuantityAdd,
+    this.onQuantitySubtract,
     this.onClickEdit,
     this.onClickRemove,
     this.isEditable = false,
@@ -26,12 +30,11 @@ class ProductComponent extends StatefulWidget {
 }
 
 class _ProductComponentState extends State<ProductComponent> {
-  double quantityMultiplied = 0;
   late int quantity;
   @override
   void initState() {
     // TODO: implement initState
-
+    widget.produto!.quantityMultplied = 0;
     quantity = 0;
     super.initState();
   }
@@ -92,7 +95,7 @@ class _ProductComponentState extends State<ProductComponent> {
             Visibility(
               visible: !widget.isEditable,
               child: CounterItem(
-                localPriceVar: quantityMultiplied,
+                localPriceVar: widget.produto!.quantityMultplied,
                 produto: widget.produto,
                 quantity: quantity,
                 isEditable: widget.isEditable,
@@ -102,14 +105,18 @@ class _ProductComponentState extends State<ProductComponent> {
                         ? quantity += 1
                         : quantity;
 
-                    quantityMultiplied = widget.produto!.price * quantity;
+                    widget.produto!.quantityMultplied =
+                        widget.produto!.price * quantity;
                   });
+                  widget.onQuantityAdd;
                 },
                 onTapLess: () {
                   setState(() {
                     quantity = quantity <= 0 ? 0 : quantity -= 1;
-                    quantityMultiplied = widget.produto!.price * quantity;
+                    widget.produto!.quantityMultplied =
+                        widget.produto!.price * quantity;
                   });
+                  widget.onQuantitySubtract;
                 },
               ),
             ),
@@ -121,7 +128,8 @@ class _ProductComponentState extends State<ProductComponent> {
                 children: [
                   Visibility(
                     visible: !widget.isEditable,
-                    child: Text('RS ${quantityMultiplied.toStringAsFixed(2)}',
+                    child: Text(
+                        'RS ${widget.produto!.quantityMultplied.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         )),

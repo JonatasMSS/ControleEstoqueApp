@@ -18,8 +18,17 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   List<ProductModel> testDatabase = [
     ProductModel(id: 0, name: 'Treloso', price: 23.50, quantity: 3),
     ProductModel(id: 1, name: 'Amendoim', price: 0.5, quantity: 2),
-    ProductModel(id: 2, name: 'Paçoca', price: 0.5, quantity: 5),
+    ProductModel(
+        id: 2, name: 'Paçoca', price: 0.5, quantity: 5, quantityMultplied: 20),
   ];
+  double sumTotal = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    setState(() {});
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +42,7 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                 constraints: const BoxConstraints(
                   minWidth: 110,
                 ),
-                child: const Text('Valor total: RS 0,00'),
+                child: Text('Valor total: RS ${sumTotal.toStringAsFixed(2)}'),
               ),
               onPressed: () => {},
             ),
@@ -68,6 +77,14 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                   final ProductModel produto = testDatabase[index];
                   return ProductComponent(
                     produto: produto,
+                    onQuantityAdd: () => setState(() {
+                      print(sumTotal);
+                      sumTotal += produto.quantityMultplied;
+                    }),
+                    onQuantitySubtract: () => setState(() {
+                      print(sumTotal);
+                      sumTotal -= produto.quantityMultplied;
+                    }),
                   );
                 },
               ),

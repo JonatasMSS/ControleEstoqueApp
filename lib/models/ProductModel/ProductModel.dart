@@ -6,7 +6,7 @@ class ProductModel {
   final String name;
   final double price;
   final int quantity;
-  final double quantityMultplied;
+  double quantityMultplied;
   ProductModel({
     required this.id,
     required this.name,

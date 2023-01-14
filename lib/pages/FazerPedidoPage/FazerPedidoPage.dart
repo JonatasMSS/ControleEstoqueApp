@@ -69,6 +69,14 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
   Widget build(BuildContext context) {
     List<Widget> dateWidget = [
       DataByDay(
+        valueData: 'segunda',
+        dataChildrens: testDatabase,
+        title: 'Segunda-feira',
+      ),
+      const SizedBox(
+        height: 30,
+      ),
+      DataByDay(
         valueData: 'terca',
         title: 'Terça-feira',
         dataChildrens: testDatabase,
