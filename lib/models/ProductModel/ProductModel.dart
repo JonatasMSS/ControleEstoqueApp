@@ -6,12 +6,14 @@ class ProductModel {
   final String name;
   final double price;
   final int quantity;
+  int quantityToOrder;
   double quantityMultplied;
   ProductModel({
     required this.id,
     required this.name,
     required this.price,
     required this.quantity,
+    this.quantityToOrder = 0,
     this.quantityMultplied = 0,
   });
 
@@ -20,6 +22,7 @@ class ProductModel {
     String? name,
     double? price,
     int? quantity,
+    int? quantityToOrder,
     double? quantityMultplied,
   }) {
     return ProductModel(
@@ -27,6 +30,7 @@ class ProductModel {
       name: name ?? this.name,
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
+      quantityToOrder: quantityToOrder ?? this.quantityToOrder,
       quantityMultplied: quantityMultplied ?? this.quantityMultplied,
     );
   }
@@ -37,6 +41,7 @@ class ProductModel {
       'name': name,
       'price': price,
       'quantity': quantity,
+      'quantityToOrder': quantityToOrder,
       'quantityMultplied': quantityMultplied,
     };
   }
@@ -47,6 +52,7 @@ class ProductModel {
       name: map['name'] as String,
       price: map['price'] as double,
       quantity: map['quantity'] as int,
+      quantityToOrder: map['quantityToOrder'] as int,
       quantityMultplied: map['quantityMultplied'] as double,
     );
   }
@@ -58,7 +64,7 @@ class ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, price: $price, quantity: $quantity, quantityMultplied: $quantityMultplied)';
+    return 'ProductModel(id: $id, name: $name, price: $price, quantity: $quantity, quantityToOrder: $quantityToOrder, quantityMultplied: $quantityMultplied)';
   }
 
   @override
@@ -69,6 +75,7 @@ class ProductModel {
         other.name == name &&
         other.price == price &&
         other.quantity == quantity &&
+        other.quantityToOrder == quantityToOrder &&
         other.quantityMultplied == quantityMultplied;
   }
 
@@ -78,6 +85,7 @@ class ProductModel {
         name.hashCode ^
         price.hashCode ^
         quantity.hashCode ^
+        quantityToOrder.hashCode ^
         quantityMultplied.hashCode;
   }
 }
