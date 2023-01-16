@@ -7,6 +7,7 @@ import 'package:genilson_app/components/InputSearchComponent/InputSearchComponen
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
 import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
+import 'package:genilson_app/pages/PedidoToProdutosPage/Dialogs/confirmation_dialog.dart';
 
 import '../../components/NavBar/NavBarComponent.dart';
 
@@ -89,7 +90,16 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                 textScaleFactor: 1.4,
               ),
               backgroundColor: const Color(0xFF6AFF79),
-              onPressed: () {},
+              onPressed: () {
+                print(pageOrder);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ConfirmationDialog(
+                        orders: pageOrder,
+                      );
+                    });
+              },
             ),
           ],
         ),
@@ -118,14 +128,6 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                   );
                 },
               ),
-              TextButton(
-                  onPressed: () => testDatabase.forEach((element) {
-                        print({
-                          'nome': element.name,
-                          'quantidadeOrder': element.quantityToOrder
-                        });
-                      }),
-                  child: Text('Ver Produtos')),
               const SizedBox(
                 height: 100,
               ),
