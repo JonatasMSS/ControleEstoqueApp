@@ -118,6 +118,14 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                   );
                 },
               ),
+              TextButton(
+                  onPressed: () => testDatabase.forEach((element) {
+                        print({
+                          'nome': element.name,
+                          'quantidadeOrder': element.quantityToOrder
+                        });
+                      }),
+                  child: Text('Ver Produtos')),
               const SizedBox(
                 height: 100,
               ),

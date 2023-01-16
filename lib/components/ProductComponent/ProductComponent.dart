@@ -38,8 +38,7 @@ class _ProductComponentState extends State<ProductComponent> {
   void initState() {
     // TODO: implement initState
     setState(() {
-      widget.produto.quantityMultplied = 0;
-      quantity = 0;
+      quantity = widget.produto.quantityToOrder;
     });
     super.initState();
   }
@@ -55,13 +54,13 @@ class _ProductComponentState extends State<ProductComponent> {
       setState(() {
         widget.orderPage?[index] = OrderModel(
             product: widget.produto,
-            quantity: quantity,
+            quantity: widget.produto.quantityToOrder,
             priceMultiplied: widget.produto.quantityMultplied);
       });
     } else {
       final OrderModel newOrder = OrderModel(
           product: widget.produto,
-          quantity: quantity,
+          quantity: widget.produto.quantityToOrder,
           priceMultiplied: widget.produto.quantityMultplied);
       setState(() {
         widget.orderPage?.add(newOrder);
@@ -84,11 +83,13 @@ class _ProductComponentState extends State<ProductComponent> {
     setState(() {
       if (quantity < widget.produto.quantity) {
         quantity += 1;
+        widget.produto.quantityToOrder = quantity;
       }
       // } else {
       //   quantity = quantity;
       // }
-      widget.produto.quantityMultplied = widget.produto.price * quantity;
+      widget.produto.quantityMultplied =
+          widget.produto.price * widget.produto.quantityToOrder;
     });
   }
 
@@ -99,6 +100,7 @@ class _ProductComponentState extends State<ProductComponent> {
       } else {
         quantity -= 1;
       }
+      widget.produto.quantityToOrder = quantity;
       widget.produto.quantityMultplied = widget.produto.price * quantity;
     });
   }
@@ -161,7 +163,7 @@ class _ProductComponentState extends State<ProductComponent> {
               child: CounterItem(
                 localPriceVar: widget.produto.quantityMultplied,
                 produto: widget.produto,
-                quantity: quantity,
+                quantity: widget.produto.quantityToOrder,
                 isEditable: widget.isEditable,
                 onTapAdd: () {
                   addQuantity();
