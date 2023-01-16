@@ -19,17 +19,19 @@ class PedidosToProdutosPage extends StatefulWidget {
 
 class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   List<ProductModel> testDatabase = [
-    ProductModel(id: 0, name: 'Treloso', price: 23.50, quantity: 3),
-    ProductModel(id: 1, name: 'Amendoim', price: 0.5, quantity: 2),
-    ProductModel(id: 2, name: 'Paçoca', price: 0.5, quantity: 5),
+    ProductModel(id: 0, name: 'Traloso', price: 22.50, quantity: 3),
+    ProductModel(id: 1, name: 'Treendoim', price: 0.5, quantity: 2),
+    ProductModel(id: 2, name: 'pacoca', price: 0.5, quantity: 5),
   ];
   late List<OrderModel> pageOrder;
   late double valorTotal;
+  late List<ProductModel> sugestionSearch;
   @override
   void initState() {
     // TODO: implement initState
     setState(() {
       pageOrder = [];
+      sugestionSearch = testDatabase;
       valorTotal = 0;
     });
     super.initState();
@@ -41,6 +43,23 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
     setState(() {
       valorTotal = sum;
     });
+  }
+
+  void searchDinamically(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        sugestionSearch = testDatabase;
+      });
+    } else {
+      final suggestion = testDatabase.where((product) {
+        final productName = product.name.toLowerCase();
+        final input = query.toLowerCase();
+        return productName.contains(input);
+      }).toList();
+      setState(() {
+        sugestionSearch = suggestion;
+      });
+    }
   }
 
   @override
@@ -79,15 +98,19 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const InputSearchComponent(
+              InputSearchComponent(
+                onChangedFunction: (value) {
+                  searchDinamically(value);
+                },
                 hintText: 'Digite o nome do produto',
               ),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: testDatabase.length,
+                itemCount: sugestionSearch.length,
                 itemBuilder: (context, index) {
-                  final ProductModel produto = testDatabase[index];
+                  final ProductModel produto = sugestionSearch[index];
+
                   return ProductComponent(
                     produto: produto,
                     orderPage: pageOrder,

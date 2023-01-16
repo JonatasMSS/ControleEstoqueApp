@@ -37,8 +37,10 @@ class _ProductComponentState extends State<ProductComponent> {
   @override
   void initState() {
     // TODO: implement initState
-    widget.produto.quantityMultplied = 0;
-    quantity = 0;
+    setState(() {
+      widget.produto.quantityMultplied = 0;
+      quantity = 0;
+    });
     super.initState();
   }
 
@@ -82,9 +84,10 @@ class _ProductComponentState extends State<ProductComponent> {
     setState(() {
       if (quantity < widget.produto.quantity) {
         quantity += 1;
-      } else {
-        quantity = quantity;
       }
+      // } else {
+      //   quantity = quantity;
+      // }
       widget.produto.quantityMultplied = widget.produto.price * quantity;
     });
   }
@@ -245,7 +248,7 @@ class _ProductComponentState extends State<ProductComponent> {
 class CounterItem extends StatefulWidget {
   ProductModel? produto;
   double localPriceVar;
-  final int quantity;
+  int quantity;
   final bool isEditable;
   final Function()? onTapAdd;
   final Function()? onTapLess;
