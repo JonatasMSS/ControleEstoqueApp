@@ -91,12 +91,13 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
               ),
               backgroundColor: const Color(0xFF6AFF79),
               onPressed: () {
-                print(pageOrder);
                 showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (context) {
                       return ConfirmationDialog(
                         orders: pageOrder,
+                        total: valorTotal,
                       );
                     });
               },
