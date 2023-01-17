@@ -77,13 +77,16 @@ class ClientComponent extends StatelessWidget {
                 const SizedBox(
                   width: 20,
                 ),
-                CircleAvatar(
-                  //TODO: Adicionar evento de exclusão
-                  backgroundColor: const Color.fromARGB(255, 254, 37, 37),
-                  child: IconButton(
-                    icon: const Icon(Icons.remove),
-                    onPressed: () => {},
-                    color: Colors.white,
+                Visibility(
+                  visible: editable,
+                  child: CircleAvatar(
+                    //TODO: Adicionar evento de exclusão
+                    backgroundColor: const Color.fromARGB(255, 254, 37, 37),
+                    child: IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () => {},
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
