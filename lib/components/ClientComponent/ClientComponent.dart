@@ -5,17 +5,20 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
+import 'package:genilson_app/components/ClientComponent/Dialogs/edition_dialog.dart';
+import 'package:genilson_app/models/ClientModel/ClientModel.dart';
+
 class ClientComponent extends StatelessWidget {
-  final String? clientName;
-  final String? clientNumber;
+  final ClientModel cliente;
   final bool editable;
   final bool haveNavigation;
+  final Function()? onClickEdit;
   const ClientComponent({
     Key? key,
-    this.clientName,
-    this.clientNumber,
+    required this.cliente,
     this.editable = false,
     this.haveNavigation = false,
+    this.onClickEdit,
   }) : super(key: key);
 
   @override
@@ -42,7 +45,7 @@ class ClientComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientName ?? 'NO DATA',
+                  cliente.name,
                   style: const TextStyle(
                     fontSize: 17,
                   ),
@@ -51,7 +54,7 @@ class ClientComponent extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  clientNumber ?? '(00)0000-0000',
+                  cliente.number.toString(),
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF686868),
@@ -69,7 +72,13 @@ class ClientComponent extends StatelessWidget {
                     backgroundColor: Colors.amber,
                     child: IconButton(
                       icon: const Icon(Icons.edit),
-                      onPressed: () => {},
+                      onPressed: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return EditionDialog(
+                              cliente: cliente,
+                            );
+                          }),
                       color: Colors.black,
                     ),
                   ),
@@ -84,7 +93,7 @@ class ClientComponent extends StatelessWidget {
                     backgroundColor: const Color.fromARGB(255, 254, 37, 37),
                     child: IconButton(
                       icon: const Icon(Icons.remove),
-                      onPressed: () => {},
+                      onPressed: () {},
                       color: Colors.white,
                     ),
                   ),

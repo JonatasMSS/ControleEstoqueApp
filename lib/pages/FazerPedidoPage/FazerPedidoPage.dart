@@ -149,8 +149,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
                   itemBuilder: (context, index) {
                     final ClientModel myClient = suggestionClients[index];
                     return ClientComponent(
-                      clientName: myClient.name,
-                      clientNumber: myClient.number.toString(),
+                      cliente: myClient,
                     );
                   },
                 ),

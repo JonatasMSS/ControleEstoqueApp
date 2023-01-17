@@ -59,6 +59,7 @@ class ClientesPage extends StatelessWidget {
                 valueData: 'terca',
                 title: 'Terça-feira',
                 dataChildrens: _testDatabase,
+                isChildrensEditable: true,
               ),
               const SizedBox(
                 height: 30,
@@ -67,6 +68,7 @@ class ClientesPage extends StatelessWidget {
                 valueData: 'quarta',
                 title: 'Quarta-feira',
                 dataChildrens: _testDatabase,
+                isChildrensEditable: true,
               ),
               const SizedBox(
                 height: 30,
@@ -75,6 +77,7 @@ class ClientesPage extends StatelessWidget {
                 valueData: 'quinta',
                 title: 'Quinta-feira',
                 dataChildrens: _testDatabase,
+                isChildrensEditable: true,
               ),
               const SizedBox(
                 height: 30,
@@ -83,6 +86,7 @@ class ClientesPage extends StatelessWidget {
                 valueData: 'sexta',
                 title: 'Sexta-feira',
                 dataChildrens: _testDatabase,
+                isChildrensEditable: true,
               ),
             ],
           ),

@@ -9,12 +9,14 @@ class DataByDay extends StatelessWidget {
   final List<ClientModel>? dataChildrens;
   final String valueData;
   final bool haveChildrensNavigation;
+  final bool isChildrensEditable;
   const DataByDay({
     Key? key,
     this.title,
     this.dataChildrens,
     required this.valueData,
     this.haveChildrensNavigation = false,
+    this.isChildrensEditable = false,
   }) : super(key: key);
 
   @override
@@ -56,9 +58,9 @@ class DataByDay extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final ClientModel _myClient = _filteredData[index];
                   return ClientComponent(
-                    clientName: _myClient.name,
-                    clientNumber: _myClient.number.toString(),
+                    cliente: _myClient,
                     haveNavigation: haveChildrensNavigation,
+                    editable: isChildrensEditable,
                   );
                 },
               ),
