@@ -5,6 +5,7 @@ import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
 import 'package:genilson_app/pages/PedidoToProdutosPage/PedidoToProdutosPage.dart';
 import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
+import 'package:genilson_app/pages/pdfPage/pdf_page.dart';
 
 import 'package:get/get.dart';
 
@@ -19,7 +20,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(fontFamily: 'Roboto-Condensed'),
-      initialRoute: '/',
+      initialRoute: '/pdfpage',
       transitionDuration: const Duration(milliseconds: 500),
       getPages: [
         GetPage(name: '/', page: () => const HomePage()),
@@ -28,7 +29,11 @@ class MainApp extends StatelessWidget {
         GetPage(
             name: '/pedidos/produtos',
             page: () => const PedidosToProdutosPage()),
-        GetPage(name: '/produtos', page: () => ProdutosPage()),
+        GetPage(
+          name: '/produtos',
+          page: () => const ProdutosPage(),
+        ),
+        GetPage(name: '/pdfpage', page: () => PdfPage())
       ],
     );
   }
