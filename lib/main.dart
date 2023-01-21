@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(fontFamily: 'Roboto-Condensed'),
-      initialRoute: '/pdfpage',
+      initialRoute: '/',
       transitionDuration: const Duration(milliseconds: 500),
       getPages: [
         GetPage(name: '/', page: () => const HomePage()),
