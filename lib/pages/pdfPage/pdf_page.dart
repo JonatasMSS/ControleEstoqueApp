@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/PdfModel/PdfModel.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,19 @@ class PdfPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE4E4E4),
       body: PdfPreview(
+        actions: [
+          TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+              ),
+              onPressed: () => Get.offAllNamed('/'),
+              child: const Text(
+                'SAIR',
+                style: TextStyle(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                ),
+              )),
+        ],
         pdfFileName: 'ProdutosCliente.pdf',
         canChangePageFormat: false,
         canChangeOrientation: false,

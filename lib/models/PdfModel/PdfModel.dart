@@ -168,7 +168,7 @@ class PdfModel {
                         ),
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text(
-                          'Valor total: $valueTotal',
+                          'Valor da nota: R\$ ${valueTotal.toStringAsFixed(2)}',
                           textScaleFactor: 1,
                         ),
                       ),
