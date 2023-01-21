@@ -121,6 +121,13 @@ class ConfirmationDialog extends StatelessWidget {
                         SimpleButtonC(
                           text: 'Confirmar',
                           primary: true,
+                          onClick: () => Get.toNamed(
+                            '/pdfpage',
+                            arguments: {
+                              'orders': orders!,
+                              'total': total,
+                            },
+                          ),
                         ),
                         SimpleButtonC(
                           text: 'Cancelar',

@@ -18,6 +18,12 @@ class PdfModel {
     required this.order,
   });
 
+  String _findTodayDate() {
+    final DateTime today = DateTime.now();
+    final String todayToSring = '${today.day}/${today.month}/${today.year}';
+    return todayToSring;
+  }
+
   Future<Uint8List> generatePDF() async {
     final List<dynamic> produtosWidgets = order.map((e) {
       return pw.Row(
@@ -76,7 +82,6 @@ class PdfModel {
       );
     }).toList();
 
-    print(produtosWidgets.length);
     final pdf = pw.Document(
       compress: true,
       title: 'Lista de produtos',
@@ -140,7 +145,7 @@ class PdfModel {
                           border: pw.Border.all(width: 1),
                         ),
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text('Destinatário:$clientName'),
+                        child: pw.Text('Destinatário: $clientName'),
                       ),
                     ),
                   ],
@@ -153,7 +158,7 @@ class PdfModel {
                           border: pw.Border.all(width: 1),
                         ),
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text('Data de emissão:00/00/00'),
+                        child: pw.Text('Data de emissão: ${_findTodayDate()}'),
                       ),
                     ),
                     pw.Expanded(
@@ -163,7 +168,7 @@ class PdfModel {
                         ),
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text(
-                          'Valor total:$valueTotal',
+                          'Valor total: $valueTotal',
                           textScaleFactor: 1,
                         ),
                       ),
