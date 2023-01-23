@@ -1,13 +1,18 @@
 import 'dart:convert';
 
+import 'package:objectbox/objectbox.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+@Entity()
 class ClientModel {
+  @Id()
   int id;
   String name;
   int number;
   String date;
   ClientModel({
-    required this.id,
+    this.id = 0,
     required this.name,
     required this.number,
     required this.date,
