@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
 import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
@@ -9,7 +10,13 @@ import 'package:genilson_app/pages/pdfPage/pdf_page.dart';
 
 import 'package:get/get.dart';
 
-void main() {
+late ObjectBox objectBox;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  objectBox = await ObjectBox.create();
+
   runApp(const MainApp());
 }
 

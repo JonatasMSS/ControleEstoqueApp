@@ -16,26 +16,10 @@ class ClientesPage extends StatelessWidget {
   //TODO: ADICIONAR EVENTO DE EXCLUSÃO
   @override
   Widget build(BuildContext context) {
-    List<String> values = ['terca', 'quarta', 'quinta', 'sexta'];
-    List<String> names = [
-      'joao',
-      'maria',
-      'josefina',
-      'carlitos',
-      'santos',
-      'alexandremota'
+    final List<ClientModel> _testDatabase = [
+      ClientModel(name: 'Carlos', number: 838383838, date: 'terca'),
+      ClientModel(name: 'João', number: 83838383, date: 'terca'),
     ];
-
-    final List<ClientModel> _testDatabase = List.generate(
-      20,
-      (index) => ClientModel(
-        id: index,
-        name: names[Random().nextInt(names.length)],
-        number: 00000000,
-        date: values[Random().nextInt(values.length)],
-      ),
-    );
-
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF6AFF79),

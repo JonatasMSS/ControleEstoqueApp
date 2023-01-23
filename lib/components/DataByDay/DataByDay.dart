@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
-class DataByDay extends StatelessWidget {
+class DataByDay extends StatefulWidget {
   final String? title;
   final List<ClientModel>? dataChildrens;
   final String valueData;
@@ -20,15 +20,20 @@ class DataByDay extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<DataByDay> createState() => _DataByDayState();
+}
+
+class _DataByDayState extends State<DataByDay> {
+  @override
   Widget build(BuildContext context) {
     _filterDataByValueData(List<ClientModel> data) {
       final List<ClientModel> _newData =
-          data.where((element) => element.date == valueData).toList();
+          data.where((element) => element.date == widget.valueData).toList();
       return _newData;
     }
 
     List<ClientModel> _filteredData =
-        _filterDataByValueData(dataChildrens ?? []);
+        _filterDataByValueData(widget.dataChildrens ?? []);
 
     return ExpansionTile(
       tilePadding: const EdgeInsets.symmetric(horizontal: 18),
@@ -39,7 +44,7 @@ class DataByDay extends StatelessWidget {
           ),
         ),
         child: Text(
-          title ?? 'NO DATA',
+          widget.title ?? 'NO DATA',
           style: const TextStyle(
             color: Color.fromARGB(255, 97, 88, 88),
             fontStyle: FontStyle.italic,
@@ -57,10 +62,16 @@ class DataByDay extends StatelessWidget {
                 itemCount: _filteredData.length,
                 itemBuilder: (context, index) {
                   final ClientModel _myClient = _filteredData[index];
+
                   return ClientComponent(
                     cliente: _myClient,
-                    haveNavigation: haveChildrensNavigation,
-                    editable: isChildrensEditable,
+                    onClickRemove: () {
+                      setState(() {
+                        widget.dataChildrens?.removeAt(index);
+                      });
+                    },
+                    haveNavigation: widget.haveChildrensNavigation,
+                    editable: widget.isChildrensEditable,
                   );
                 },
               ),

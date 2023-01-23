@@ -13,12 +13,14 @@ class ClientComponent extends StatelessWidget {
   final bool editable;
   final bool haveNavigation;
   final Function()? onClickEdit;
+  final Function()? onClickRemove;
   const ClientComponent({
     Key? key,
     required this.cliente,
     this.editable = false,
     this.haveNavigation = false,
     this.onClickEdit,
+    this.onClickRemove,
   }) : super(key: key);
 
   @override
@@ -68,7 +70,6 @@ class ClientComponent extends StatelessWidget {
                 Visibility(
                   visible: editable,
                   child: CircleAvatar(
-                    //TODO: adicionar evento de edição
                     backgroundColor: Colors.amber,
                     child: IconButton(
                       icon: const Icon(Icons.edit),
@@ -93,7 +94,7 @@ class ClientComponent extends StatelessWidget {
                     backgroundColor: const Color.fromARGB(255, 254, 37, 37),
                     child: IconButton(
                       icon: const Icon(Icons.remove),
-                      onPressed: () {},
+                      onPressed: onClickRemove,
                       color: Colors.white,
                     ),
                   ),
