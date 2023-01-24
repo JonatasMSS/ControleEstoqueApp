@@ -1,38 +1,51 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:genilson_app/database/eventsBox.dart';
+import 'package:get/get.dart';
+
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 import 'package:genilson_app/pages/PedidoToProdutosPage/Dialogs/confirmation_dialog.dart';
 
 import '../../components/NavBar/NavBarComponent.dart';
+import '../../models/ClientModel/ClientModel.dart';
 
 class PedidosToProdutosPage extends StatefulWidget {
-  const PedidosToProdutosPage({super.key});
+  ObjectBox objectBox;
+
+  PedidosToProdutosPage({
+    Key? key,
+    required this.objectBox,
+  }) : super(key: key);
 
   @override
   State<PedidosToProdutosPage> createState() => _PedidosToProdutosPageState();
 }
 
 class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
-  List<ProductModel> testDatabase = [
-    ProductModel(id: 0, name: 'Traloso', price: 22.50, quantity: 3),
-    ProductModel(id: 1, name: 'Treendoim', price: 0.5, quantity: 2),
-    ProductModel(id: 2, name: 'pacoca', price: 0.5, quantity: 5),
-  ];
+  late List<ProductModel> produtos;
+  late EventsBox eventsBox;
   late List<OrderModel> pageOrder;
   late double valorTotal;
   late List<ProductModel> sugestionSearch;
+  final String args = Get.arguments;
   @override
   void initState() {
-    // TODO: implement initState
+    eventsBox = EventsBox(boxDatabase: widget.objectBox);
+    produtos = eventsBox.getAllProducts()
+      ..sort(
+        (a, b) => a.name.compareTo(b.name),
+      );
     setState(() {
       pageOrder = [];
-      sugestionSearch = testDatabase;
+      sugestionSearch = produtos;
       valorTotal = 0;
     });
     super.initState();
@@ -49,10 +62,10 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   void searchDinamically(String query) {
     if (query.isEmpty) {
       setState(() {
-        sugestionSearch = testDatabase;
+        sugestionSearch = produtos;
       });
     } else {
-      final suggestion = testDatabase.where((product) {
+      final suggestion = produtos.where((product) {
         final productName = product.name.toLowerCase();
         final input = query.toLowerCase();
         return productName.contains(input);
@@ -98,6 +111,7 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                       return ConfirmationDialog(
                         orders: pageOrder,
                         total: valorTotal,
+                        clientName: args,
                       );
                     });
               },

@@ -36,10 +36,16 @@ class MainApp extends StatelessWidget {
             page: () => ClientesPage(
                   objectBox: objectBox,
                 )),
-        GetPage(name: '/pedidos', page: () => const FazerPedidoPage()),
+        GetPage(
+            name: '/pedidos',
+            page: () => FazerPedidoPage(
+                  objectBox: objectBox,
+                )),
         GetPage(
             name: '/pedidos/produtos',
-            page: () => const PedidosToProdutosPage()),
+            page: () => PedidosToProdutosPage(
+                  objectBox: objectBox,
+                )),
         GetPage(
           name: '/produtos',
           page: () => ProdutosPage(

@@ -2,19 +2,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
-
-import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:get/get.dart';
+
+import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 
 class ConfirmationDialog extends StatelessWidget {
   final List<OrderModel>? orders;
   final double? total;
+  final String clientName;
 
   const ConfirmationDialog({
     Key? key,
     this.orders,
     this.total,
+    this.clientName = 'NO CLIENT',
   }) : super(key: key);
 
   @override
@@ -126,6 +128,7 @@ class ConfirmationDialog extends StatelessWidget {
                             arguments: {
                               'orders': orders!,
                               'total': total,
+                              'client': clientName,
                             },
                           ),
                         ),

@@ -14,7 +14,7 @@ class PdfPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map<String, dynamic> ordersFromPage = Get.arguments;
     final PdfModel pdfModelToPage = PdfModel(
-      clientName: 'Cliente Teste',
+      clientName: ordersFromPage['client'],
       valueTotal: ordersFromPage['total'],
       order: ordersFromPage['orders'],
     );

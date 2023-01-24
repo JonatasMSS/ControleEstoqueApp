@@ -29,7 +29,12 @@ class ClientComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => haveNavigation ? Get.toNamed('/pedidos/produtos') : '',
+      onTap: () => haveNavigation
+          ? Get.toNamed(
+              '/pedidos/produtos',
+              arguments: cliente.name,
+            )
+          : '',
       child: Container(
         margin: const EdgeInsets.all(10),
         padding: const EdgeInsets.all(10),

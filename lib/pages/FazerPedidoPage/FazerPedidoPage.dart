@@ -1,12 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
+import 'package:genilson_app/database/eventsBox.dart';
+import 'package:genilson_app/main.dart';
 
 import '../../models/ClientModel/ClientModel.dart';
 
@@ -20,7 +25,12 @@ List<String> names = [
 ];
 
 class FazerPedidoPage extends StatefulWidget {
-  const FazerPedidoPage({super.key});
+  ObjectBox objectBox;
+
+  FazerPedidoPage({
+    Key? key,
+    required this.objectBox,
+  }) : super(key: key);
 
   @override
   State<FazerPedidoPage> createState() => _FazerPedidoPageState();
@@ -28,14 +38,8 @@ class FazerPedidoPage extends StatefulWidget {
 
 class _FazerPedidoPageState extends State<FazerPedidoPage> {
   //Variaveis
-  List<ClientModel> testDatabase = List.generate(
-    2,
-    (index) => ClientModel(
-        id: index,
-        name: names[Random().nextInt(names.length)],
-        number: 000000,
-        date: 'quarta'),
-  );
+  late List<ClientModel> clients;
+  late EventsBox eventsBox;
   late bool focusChange;
   late List<ClientModel> suggestionClients;
   late TextEditingController searchController;
@@ -44,7 +48,9 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
   @override
   void initState() {
     setState(() {
-      suggestionClients = testDatabase;
+      eventsBox = EventsBox(boxDatabase: objectBox);
+      clients = eventsBox.listarClientes();
+      suggestionClients = clients;
       focusChange = false;
       searchController = TextEditingController();
     });
@@ -53,7 +59,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
   }
 
   void searchDinamically(String query) {
-    final suggestion = testDatabase.where((client) {
+    final suggestion = clients.where((client) {
       final clientName = client.name.toLowerCase();
       final input = query.toLowerCase();
       return clientName.contains(input);
@@ -70,8 +76,9 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
     List<Widget> dateWidget = [
       DataByDay(
         valueData: 'segunda',
-        dataChildrens: testDatabase,
+        dataChildrens: clients,
         title: 'Segunda-feira',
+        haveChildrensNavigation: true,
       ),
       const SizedBox(
         height: 30,
@@ -79,7 +86,8 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'terca',
         title: 'Terça-feira',
-        dataChildrens: testDatabase,
+        dataChildrens: clients,
+        haveChildrensNavigation: true,
       ),
       const SizedBox(
         height: 30,
@@ -87,7 +95,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'quarta',
         title: 'Quarta-feira',
-        dataChildrens: testDatabase,
+        dataChildrens: clients,
         haveChildrensNavigation: true,
       ),
       const SizedBox(
@@ -96,7 +104,8 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'quinta',
         title: 'Quinta-feira',
-        dataChildrens: testDatabase,
+        dataChildrens: clients,
+        haveChildrensNavigation: true,
       ),
       const SizedBox(
         height: 30,
@@ -104,7 +113,8 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       DataByDay(
         valueData: 'sexta',
         title: 'Sexta-feira',
-        dataChildrens: testDatabase,
+        dataChildrens: clients,
+        haveChildrensNavigation: true,
       ),
       const SizedBox(
         height: 30,
