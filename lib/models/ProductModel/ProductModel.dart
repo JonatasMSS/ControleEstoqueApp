@@ -1,15 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:objectbox/objectbox.dart';
+
+@Entity()
 class ProductModel {
-  final int id;
-  final String name;
-  final double price;
-  final int quantity;
+  @Id()
+  int id;
+  String name;
+  double price;
+  int quantity;
   int quantityToOrder;
   double quantityMultplied;
   ProductModel({
-    required this.id,
+    this.id = 0,
     required this.name,
     required this.price,
     required this.quantity,

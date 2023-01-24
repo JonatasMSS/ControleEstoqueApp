@@ -42,7 +42,9 @@ class MainApp extends StatelessWidget {
             page: () => const PedidosToProdutosPage()),
         GetPage(
           name: '/produtos',
-          page: () => const ProdutosPage(),
+          page: () => ProdutosPage(
+            objectBox: objectBox,
+          ),
         ),
         GetPage(name: '/pdfpage', page: () => PdfPage())
       ],

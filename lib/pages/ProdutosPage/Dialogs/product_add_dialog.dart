@@ -2,25 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:get/get.dart';
 
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
 import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
+import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 
 class ProductAddDialog extends StatefulWidget {
-  //TODO:NAME CONTROLLER SER UMA VARIAVEL CONTROLLER!
-
-  final TextEditingController? nameController;
-  final TextEditingController? quantityController;
-  final TextEditingController? priceController;
+  final EventsBox eventsBox;
 
   const ProductAddDialog({
     Key? key,
-    this.nameController,
-    this.quantityController,
-    this.priceController,
+    required this.eventsBox,
   }) : super(key: key);
 
   @override
@@ -28,18 +23,14 @@ class ProductAddDialog extends StatefulWidget {
 }
 
 class _ProductAddDialogState extends State<ProductAddDialog> {
-  late Map<String, TextEditingController?> controllers;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController quantityController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
 
   @override
   void initState() {
     // TODO: implement initState
-    setState(() {
-      controllers = {
-        'nameC': widget.nameController,
-        'quantityC': widget.quantityController,
-        'priceC': widget.priceController,
-      };
-    });
+
     super.initState();
   }
 
@@ -68,7 +59,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
           height: 7,
         ),
         InputFormComponent(
-          controller: controllers['nameC'],
+          controller: nameController,
           titleForm: 'Nome do produto',
           placeholder: 'Digite o nome do produto',
           fontSize: 1.5,
@@ -81,7 +72,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
           children: [
             Expanded(
               child: InputFormComponent(
-                controller: controllers['quantityC'],
+                controller: quantityController,
                 titleForm: 'Quantidade',
                 placeholder: 'Em estoque',
                 fontSize: 1.5,
@@ -90,7 +81,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
             ),
             Expanded(
               child: InputFormComponent(
-                controller: controllers['priceC'],
+                controller: priceController,
                 titleForm: 'Preco unitário',
                 placeholder: 'Valor unitário',
                 type: TextInputType.number,
@@ -111,7 +102,17 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
               child: SimpleButtonC(
                 primary: true,
                 text: 'Confirmar',
-                onClick: () => Get.back(),
+                onClick: () async {
+                  final ProductModel newProduct = ProductModel(
+                    name: nameController.text.toUpperCase(),
+                    price: double.parse(
+                      priceController.text.replaceAll(RegExp(','), '.'),
+                    ),
+                    quantity: int.parse(quantityController.text),
+                  );
+                  await widget.eventsBox.addProductToDatabase(newProduct);
+                  Get.back(result: true);
+                },
               ),
             ),
             const SizedBox(

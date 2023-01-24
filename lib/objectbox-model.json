@@ -31,9 +31,48 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "2:8594836408282404510",
+      "lastPropertyId": "6:6277369509316789433",
+      "name": "ProductModel",
+      "properties": [
+        {
+          "id": "1:773374108357839112",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2725677453996419257",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4282978400661500020",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "4:6169736273995114098",
+          "name": "quantity",
+          "type": 6
+        },
+        {
+          "id": "5:4671061142049788939",
+          "name": "quantityToOrder",
+          "type": 6
+        },
+        {
+          "id": "6:6277369509316789433",
+          "name": "quantityMultplied",
+          "type": 8
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:4641091681137049993",
+  "lastEntityId": "2:8594836408282404510",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

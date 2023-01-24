@@ -137,7 +137,7 @@ class _ProductComponentState extends State<ProductComponent> {
                     height: 2,
                   ),
                   Text(
-                    'RS ${widget.produto.price} UN',
+                    'RS ${widget.produto.price.toStringAsFixed(2)} UN',
                     textScaleFactor: 1.1,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,

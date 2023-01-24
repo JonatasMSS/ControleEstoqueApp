@@ -3,6 +3,7 @@
 import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
+import '../models/ProductModel/ProductModel.dart';
 import '../objectbox.g.dart';
 
 class EventsBox {
@@ -48,5 +49,29 @@ class EventsBox {
     final clientBox = store.box<ClientModel>();
     final getAllUsers = clientBox.getAll();
     return getAllUsers;
+  }
+
+  Future<void> addProductToDatabase(ProductModel produto) async {
+    final store = boxDatabase.store;
+    final productsBox = store.box<ProductModel>();
+    await productsBox.putAsync(produto);
+  }
+
+  Future<void> updateProduct(ProductModel produto) async {
+    final store = boxDatabase.store;
+    final productsBox = store.box<ProductModel>();
+    await productsBox.putAsync(produto, mode: PutMode.update);
+  }
+
+  void removeProductById(int id) {
+    final store = boxDatabase.store;
+    final productsBox = store.box<ProductModel>();
+    productsBox.remove(id);
+  }
+
+  List<ProductModel> getAllProducts() {
+    final store = boxDatabase.store;
+    final productsBox = store.box<ProductModel>();
+    return productsBox.getAll();
   }
 }

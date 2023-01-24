@@ -1,21 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
 import 'package:get/get.dart';
 
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
+import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
 
 import '../../../components/InputFormComponent/InputFormComponent.dart';
 import '../../../components/SimpleButtonC/SimpleButtonC.dart';
 
 class EditDialog extends StatefulWidget {
   final ProductModel produto;
-
+  final EventsBox eventsBox;
   const EditDialog({
     Key? key,
     required this.produto,
+    required this.eventsBox,
   }) : super(key: key);
 
   @override
@@ -105,7 +108,17 @@ class _EditDialogState extends State<EditDialog> {
               child: SimpleButtonC(
                 primary: true,
                 text: 'Editar',
-                onClick: () => Get.back(),
+                onClick: () async {
+                  final ProductModel editedNewProduct = ProductModel(
+                    id: widget.produto.id,
+                    name: nameController.text.toUpperCase(),
+                    price: double.parse(
+                        priceController.text.replaceAll(RegExp(','), '.')),
+                    quantity: int.parse(quantityController.text),
+                  );
+                  await widget.eventsBox.updateProduct(editedNewProduct);
+                  Get.back(result: true);
+                },
               ),
             ),
             const SizedBox(
@@ -114,7 +127,7 @@ class _EditDialogState extends State<EditDialog> {
             Expanded(
               child: SimpleButtonC(
                 text: 'Cancelar',
-                onClick: () => Get.back(),
+                onClick: () => Get.back(result: false),
               ),
             ),
             const SizedBox(
