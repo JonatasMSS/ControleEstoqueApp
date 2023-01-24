@@ -31,7 +31,11 @@ class MainApp extends StatelessWidget {
       transitionDuration: const Duration(milliseconds: 500),
       getPages: [
         GetPage(name: '/', page: () => const HomePage()),
-        GetPage(name: '/clientes', page: () => const ClientesPage()),
+        GetPage(
+            name: '/clientes',
+            page: () => ClientesPage(
+                  objectBox: objectBox,
+                )),
         GetPage(name: '/pedidos', page: () => const FazerPedidoPage()),
         GetPage(
             name: '/pedidos/produtos',

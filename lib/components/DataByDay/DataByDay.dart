@@ -66,9 +66,9 @@ class _DataByDayState extends State<DataByDay> {
                   return ClientComponent(
                     cliente: _myClient,
                     onClickRemove: () {
-                      setState(() {
-                        widget.dataChildrens?.removeAt(index);
-                      });
+                      // setState(() {
+                      //   widget.dataChildrens?.removeAt(index);
+                      // });
                     },
                     haveNavigation: widget.haveChildrensNavigation,
                     editable: widget.isChildrensEditable,

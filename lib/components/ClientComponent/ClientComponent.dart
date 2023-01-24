@@ -90,7 +90,6 @@ class ClientComponent extends StatelessWidget {
                 Visibility(
                   visible: editable,
                   child: CircleAvatar(
-                    //TODO: Adicionar evento de exclusão
                     backgroundColor: const Color.fromARGB(255, 254, 37, 37),
                     child: IconButton(
                       icon: const Icon(Icons.remove),

@@ -36,6 +36,10 @@ class _DropDownInputCState extends State<DropDownInputC> {
             hint: const Text('Informe o dia de atendimento'),
             items: const [
               DropdownMenuItem(
+                value: 'segunda',
+                child: Text('Segunda'),
+              ),
+              DropdownMenuItem(
                 value: 'terca',
                 child: Text('Terça'),
               ),
