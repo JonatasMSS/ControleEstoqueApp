@@ -6,17 +6,20 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
 import 'package:genilson_app/components/ClientComponent/Dialogs/edition_dialog.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 class ClientComponent extends StatelessWidget {
-  final ClientModel cliente;
+  ClientModel cliente;
+  ObjectBox? objectBox;
   final bool editable;
   final bool haveNavigation;
   final Function()? onClickEdit;
   final Function()? onClickRemove;
-  const ClientComponent({
+  ClientComponent({
     Key? key,
     required this.cliente,
+    this.objectBox,
     this.editable = false,
     this.haveNavigation = false,
     this.onClickEdit,
@@ -78,8 +81,20 @@ class ClientComponent extends StatelessWidget {
                           builder: (context) {
                             return EditionDialog(
                               cliente: cliente,
+                              objectBox: objectBox,
                             );
-                          }),
+                          }).then((value) async {
+                        Get.snackbar(
+                          'Cliente editado',
+                          'Cliente editado com sucesso! Retornando à tela principal para atualização...',
+                          backgroundColor: Colors.amber,
+                          colorText: Colors.black,
+                        );
+
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
+                        Get.offAllNamed('/');
+                      }),
                       color: Colors.black,
                     ),
                   ),

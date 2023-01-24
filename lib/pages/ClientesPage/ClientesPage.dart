@@ -57,8 +57,6 @@ class _ClientesPageState extends State<ClientesPage> {
             if (value) {
               setState(() {
                 clients = eventsBox.listarClientes();
-
-                print(clients);
               });
               Get.snackbar(
                 'Cliente adicionado',

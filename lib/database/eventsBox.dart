@@ -16,7 +16,12 @@ class EventsBox {
     final store = boxDatabase.store;
     final clientBox = store.box<ClientModel>();
     await clientBox.putAsync(cliente);
-    print("Model adicionado com sucesso!");
+  }
+
+  Future<void> updateClient(ClientModel client) async {
+    final store = boxDatabase.store;
+    final clientBox = store.box<ClientModel>();
+    await clientBox.putAsync(client, mode: PutMode.update);
   }
 
   void removeAllClients() {
@@ -29,6 +34,12 @@ class EventsBox {
     final store = boxDatabase.store;
     final clientBox = store.box<ClientModel>();
     clientBox.remove(clientID);
+  }
+
+  ClientModel? getClientById(int clientId) {
+    final store = boxDatabase.store;
+    final clientBox = store.box<ClientModel>();
+    return clientBox.get(clientId);
   }
 
   List<ClientModel> listarClientes() {

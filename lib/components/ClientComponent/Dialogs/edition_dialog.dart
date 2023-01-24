@@ -1,20 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:genilson_app/main.dart';
+import 'package:get/get.dart';
 
 import 'package:genilson_app/components/DropDownInputC/DropDownInputC.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 import '../../InputFormComponent/InputFormComponent.dart';
 import '../../SimpleButtonC/SimpleButtonC.dart';
 
 class EditionDialog extends StatefulWidget {
-  final ClientModel? cliente;
-
-  const EditionDialog({
+  ClientModel? cliente;
+  ObjectBox? objectBox;
+  EditionDialog({
     Key? key,
     this.cliente,
+    this.objectBox,
   }) : super(key: key);
 
   @override
@@ -25,6 +28,7 @@ class _EditionDialogState extends State<EditionDialog> {
   late TextEditingController clientNameController;
   late TextEditingController clientNumberController;
   late String? clientDateController;
+  late EventsBox eventsBox;
 
   @override
   void initState() {
@@ -32,7 +36,7 @@ class _EditionDialogState extends State<EditionDialog> {
     clientNameController = TextEditingController(text: widget.cliente?.name);
     clientNumberController =
         TextEditingController(text: widget.cliente?.number.toString());
-
+    eventsBox = EventsBox(boxDatabase: objectBox);
     super.initState();
   }
 
@@ -92,7 +96,21 @@ class _EditionDialogState extends State<EditionDialog> {
             SimpleButtonC(
               primary: true,
               text: 'Confirmar',
-              onClick: () => Navigator.pop(context),
+              onClick: () async {
+                final ClientModel newClient = ClientModel(
+                  id: widget.cliente!.id,
+                  name: clientNameController.text.toString(),
+                  number: int.parse(clientNumberController.text),
+                  date: clientDateController ?? '',
+                );
+
+                await eventsBox.addClientToObjectBox(newClient);
+
+                setState(() {
+                  widget.cliente = newClient;
+                });
+                Get.back();
+              },
             ),
             SimpleButtonC(
               text: 'Cancelar',
