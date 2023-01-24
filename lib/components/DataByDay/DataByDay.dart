@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
 class DataByDay extends StatefulWidget {
@@ -10,6 +11,7 @@ class DataByDay extends StatefulWidget {
   final String valueData;
   final bool haveChildrensNavigation;
   final bool isChildrensEditable;
+  final EventsBox? eventsBox;
   const DataByDay({
     Key? key,
     this.title,
@@ -17,6 +19,7 @@ class DataByDay extends StatefulWidget {
     required this.valueData,
     this.haveChildrensNavigation = false,
     this.isChildrensEditable = false,
+    this.eventsBox,
   }) : super(key: key);
 
   @override
@@ -61,14 +64,15 @@ class _DataByDayState extends State<DataByDay> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _filteredData.length,
                 itemBuilder: (context, index) {
-                  final ClientModel _myClient = _filteredData[index];
+                  final ClientModel myClient = _filteredData[index];
 
                   return ClientComponent(
-                    cliente: _myClient,
+                    cliente: myClient,
                     onClickRemove: () {
-                      // setState(() {
-                      //   widget.dataChildrens?.removeAt(index);
-                      // });
+                      widget.eventsBox?.removeClientById(myClient.id);
+                      setState(() {
+                        widget.dataChildrens?.removeAt(index);
+                      });
                     },
                     haveNavigation: widget.haveChildrensNavigation,
                     editable: widget.isChildrensEditable,

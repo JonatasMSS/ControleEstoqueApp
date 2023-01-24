@@ -36,7 +36,7 @@ class _ClientesPageState extends State<ClientesPage> {
   void initState() {
     eventsBox = EventsBox(boxDatabase: widget.objectBox);
     clients = eventsBox.listarClientes();
-    print("INIT STATE");
+
     super.initState();
   }
 
@@ -54,9 +54,20 @@ class _ClientesPageState extends State<ClientesPage> {
                   eventsDatabase: eventsBox,
                 );
               }).then((value) {
-            setState(() {
-              clients = eventsBox.listarClientes();
-            });
+            if (value) {
+              setState(() {
+                clients = eventsBox.listarClientes();
+
+                print(clients);
+              });
+              Get.snackbar(
+                'Cliente adicionado',
+                'Cliente adicionado com sucesso!',
+                backgroundColor: Colors.blue,
+                colorText: Colors.white,
+                icon: const Icon(Icons.person),
+              );
+            }
           }),
           child: const Icon(Icons.add),
         ),
@@ -72,6 +83,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 valueData: 'segunda',
                 title: 'Segunda-feira',
                 dataChildrens: clients,
+                eventsBox: eventsBox,
                 isChildrensEditable: true,
               ),
               const SizedBox(
@@ -81,6 +93,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 valueData: 'terca',
                 title: 'Terça-feira',
                 dataChildrens: clients,
+                eventsBox: eventsBox,
                 isChildrensEditable: true,
               ),
               const SizedBox(
@@ -90,6 +103,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 valueData: 'quarta',
                 title: 'Quarta-feira',
                 dataChildrens: clients,
+                eventsBox: eventsBox,
                 isChildrensEditable: true,
               ),
               const SizedBox(
@@ -99,6 +113,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 valueData: 'quinta',
                 title: 'Quinta-feira',
                 dataChildrens: clients,
+                eventsBox: eventsBox,
                 isChildrensEditable: true,
               ),
               const SizedBox(
@@ -108,6 +123,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 valueData: 'sexta',
                 title: 'Sexta-feira',
                 dataChildrens: clients,
+                eventsBox: eventsBox,
                 isChildrensEditable: true,
               ),
             ],
@@ -190,15 +206,15 @@ class _ClientDialogAddState extends State<ClientDialogAdd> {
             SimpleButtonC(
               primary: true,
               text: 'Confirmar',
-              onClick: () {
+              onClick: () async {
                 final ClientModel newClient = ClientModel(
                   name: nome.text,
                   number: int.parse(numero.text),
                   date: _dateData!,
                 );
-                widget.eventsDatabase.addClientToObjectBox(newClient);
+                await widget.eventsDatabase.addClientToObjectBox(newClient);
 
-                Navigator.pop(context);
+                Get.back(result: true);
               },
             ),
             SimpleButtonC(
