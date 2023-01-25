@@ -79,9 +79,35 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: Column(
+        floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            FloatingActionButton.extended(
+              heroTag: null,
+              icon: const Icon(Icons.check),
+              label: const Text(
+                'Confirmar pedido',
+                textScaleFactor: 1.1,
+              ),
+              backgroundColor: const Color(0xFF6AFF79),
+              onPressed: () {
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    return ConfirmationDialog(
+                      eventsBox: eventsBox,
+                      orders: pageOrder,
+                      total: valorTotal,
+                      clientName: args,
+                    );
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              width: 10,
+            ),
             FloatingActionButton.extended(
               label: Container(
                 alignment: Alignment.center,
@@ -91,30 +117,6 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
                 child: Text('Valor total: ${valorTotal.toStringAsFixed(2)}'),
               ),
               onPressed: () => {},
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            FloatingActionButton.extended(
-              heroTag: null,
-              icon: const Icon(Icons.check),
-              label: const Text(
-                'Confirmar pedido',
-                textScaleFactor: 1.4,
-              ),
-              backgroundColor: const Color(0xFF6AFF79),
-              onPressed: () {
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (context) {
-                      return ConfirmationDialog(
-                        orders: pageOrder,
-                        total: valorTotal,
-                        clientName: args,
-                      );
-                    });
-              },
             ),
           ],
         ),

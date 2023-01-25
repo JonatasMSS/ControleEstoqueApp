@@ -63,6 +63,12 @@ class EventsBox {
     await productsBox.putAsync(produto, mode: PutMode.update);
   }
 
+  Future<void> updateManyProducts(List<ProductModel> produtos) async {
+    final store = boxDatabase.store;
+    final productBox = store.box<ProductModel>();
+    productBox.putMany(produtos, mode: PutMode.put);
+  }
+
   void removeProductById(int id) {
     final store = boxDatabase.store;
     final productsBox = store.box<ProductModel>();

@@ -121,7 +121,7 @@ class _ProductAddDialogState extends State<ProductAddDialog> {
             Expanded(
               child: SimpleButtonC(
                 text: 'Cancelar',
-                onClick: () => Get.back(),
+                onClick: () => Get.back(result: false),
               ),
             ),
             const SizedBox(

@@ -15,15 +15,6 @@ import 'package:genilson_app/main.dart';
 
 import '../../models/ClientModel/ClientModel.dart';
 
-List<String> names = [
-  'marta da costa silva',
-  'maercio de sousa santos',
-  'josefino altos do morro',
-  'cristiano ronaldo da silva',
-  'antonio bandeira dos santos ',
-  'rodrigo dos santos'
-];
-
 class FazerPedidoPage extends StatefulWidget {
   ObjectBox objectBox;
 
@@ -54,7 +45,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
       focusChange = false;
       searchController = TextEditingController();
     });
-    // TODO: implement initState
+
     super.initState();
   }
 

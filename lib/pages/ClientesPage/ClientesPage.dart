@@ -217,7 +217,7 @@ class _ClientDialogAddState extends State<ClientDialogAdd> {
             ),
             SimpleButtonC(
               text: 'Cancelar',
-              onClick: () => Get.back(),
+              onClick: () => Get.back(result: false),
             )
           ],
         ),
