@@ -81,6 +81,12 @@ class EventsBox {
     productsBox.remove(id);
   }
 
+  void removeAllProducts() {
+    final store = boxDatabase.store;
+    final productsBox = store.box<ProductModel>();
+    productsBox.removeAll();
+  }
+
   List<ProductModel> getAllProducts() {
     final store = boxDatabase.store;
     final productsBox = store.box<ProductModel>();

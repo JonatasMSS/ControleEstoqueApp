@@ -34,9 +34,10 @@ class ProductComponent extends StatefulWidget {
 
 class _ProductComponentState extends State<ProductComponent> {
   late int quantity;
+  late bool isQuantityEmpty;
   @override
   void initState() {
-    // TODO: implement initState
+    isQuantityEmpty = widget.produto.quantity == 0 ? true : false;
     setState(() {
       quantity = widget.produto.quantityToOrder;
     });
@@ -146,14 +147,20 @@ class _ProductComponentState extends State<ProductComponent> {
                   const SizedBox(
                     height: 2,
                   ),
-                  Text(
-                    'Em estoque: ${widget.produto.quantity}',
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 66, 66, 66),
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  )
+                  isQuantityEmpty
+                      ? const Text(
+                          'Em falta',
+                          style: TextStyle(
+                              color: Colors.red, fontStyle: FontStyle.italic),
+                        )
+                      : Text(
+                          'Em estoque: ${widget.produto.quantity}',
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 66, 66, 66),
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        )
                 ],
               ),
             ),
@@ -201,13 +208,21 @@ class _ProductComponentState extends State<ProductComponent> {
                     : MainAxisAlignment.center,
                 children: [
                   Visibility(
-                    visible: !widget.isEditable,
-                    child: Text(
-                        'RS ${widget.produto.quantityMultplied.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
+                      visible: !widget.isEditable,
+                      child: isQuantityEmpty
+                          ? const CircleAvatar(
+                              backgroundColor: Colors.red,
+                              child: Icon(
+                                Icons.warning,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(
+                              'RS ${widget.produto.quantityMultplied.toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
                   Visibility(
                     visible: widget.isEditable,
                     child: GestureDetector(
