@@ -143,7 +143,7 @@ class ConfirmationDialog extends StatelessWidget {
                                   .updateManyProducts(newEditedProducts)
                                   .then((value) => print(
                                       'Produtos modificados com sucesso!'));
-                              Get.offAndToNamed(
+                              Get.offAllNamed(
                                 '/pdfpage',
                                 arguments: {
                                   'orders': orders!,
