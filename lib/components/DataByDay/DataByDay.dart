@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
+import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
 import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/models/ClientModel/ClientModel.dart';
+import 'package:get/get.dart';
 
 class DataByDay extends StatefulWidget {
   final String? title;
@@ -69,10 +71,34 @@ class _DataByDayState extends State<DataByDay> {
                   return ClientComponent(
                     cliente: myClient,
                     onClickRemove: () {
-                      widget.eventsBox?.removeClientById(myClient.id);
-                      setState(() {
-                        widget.dataChildrens?.removeAt(index);
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Remover cliente'),
+                              content: Text(
+                                "Tem certeza que deseja remover ${myClient.name}?",
+                              ),
+                              actions: [
+                                SimpleButtonC(
+                                  text: "Deletar",
+                                  onClick: () {
+                                    widget.eventsBox
+                                        ?.removeClientById(myClient.id);
+                                    setState(() {
+                                      widget.dataChildrens?.removeAt(index);
+                                    });
+                                    Get.back();
+                                  },
+                                ),
+                                SimpleButtonC(
+                                  text: "Cancelar",
+                                  primary: true,
+                                  onClick: () => Get.back(),
+                                )
+                              ],
+                            );
+                          });
                     },
                     haveNavigation: widget.haveChildrensNavigation,
                     editable: widget.isChildrensEditable,

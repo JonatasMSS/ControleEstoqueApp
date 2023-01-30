@@ -65,6 +65,8 @@ class _ClientesPageState extends State<ClientesPage> {
                 colorText: Colors.white,
                 icon: const Icon(Icons.person),
               );
+            } else {
+              print('Cancelado');
             }
           }),
           child: const Icon(Icons.add),

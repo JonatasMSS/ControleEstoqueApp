@@ -109,12 +109,12 @@ class _EditionDialogState extends State<EditionDialog> {
                 setState(() {
                   widget.cliente = newClient;
                 });
-                Get.back();
+                Get.back(result: true);
               },
             ),
             SimpleButtonC(
               text: 'Cancelar',
-              onClick: () => Navigator.pop(context),
+              onClick: () => Get.back(result: false),
             )
           ],
         ),

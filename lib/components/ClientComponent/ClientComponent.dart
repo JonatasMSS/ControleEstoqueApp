@@ -89,16 +89,17 @@ class ClientComponent extends StatelessWidget {
                               objectBox: objectBox,
                             );
                           }).then((value) async {
-                        Get.snackbar(
-                          'Cliente editado',
-                          'Cliente editado com sucesso! Retornando à tela principal para atualização...',
-                          backgroundColor: Colors.amber,
-                          colorText: Colors.black,
-                        );
-
-                        await Future.delayed(
-                            const Duration(milliseconds: 1000));
-                        Get.offAllNamed('/');
+                        if (value) {
+                          Get.snackbar(
+                            'Cliente editado',
+                            'Cliente editado com sucesso! Retornando à tela principal para atualização...',
+                            backgroundColor: Colors.amber,
+                            colorText: Colors.black,
+                          );
+                          await Future.delayed(
+                              const Duration(milliseconds: 1000));
+                          Get.offAllNamed('/');
+                        }
                       }),
                       color: Colors.black,
                     ),

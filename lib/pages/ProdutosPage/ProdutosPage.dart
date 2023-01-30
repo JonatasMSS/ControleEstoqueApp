@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/components/InputSearchComponent/InputSearchComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/ProductComponent/ProductComponent.dart';
+import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
 import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/main.dart';
@@ -143,15 +144,38 @@ class _ProdutosPageState extends State<ProdutosPage> {
                     itemBuilder: (context, index) {
                       final ProductModel produto = suggestionDatabase[index];
                       return ProductComponent(
-                          produto: produto,
-                          isEditable: true,
-                          onClickEdit: () => editProduct(context, produto),
-                          onClickRemove: () {
-                            eventsBox.removeProductById(produto.id);
-                            setState(() {
-                              suggestionDatabase.removeAt(index);
-                            });
-                          });
+                        produto: produto,
+                        isEditable: true,
+                        onClickEdit: () => editProduct(context, produto),
+                        onClickRemove: () => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text('Deletar produto'),
+                              content: Text(
+                                  'Tem certeza que deseja deletar ${produto.name}?'),
+                              actionsAlignment: MainAxisAlignment.spaceAround,
+                              actions: [
+                                SimpleButtonC(
+                                  text: "Deletar",
+                                  onClick: () {
+                                    eventsBox.removeProductById(produto.id);
+                                    setState(() {
+                                      suggestionDatabase.removeAt(index);
+                                    });
+                                    Get.back();
+                                  },
+                                ),
+                                SimpleButtonC(
+                                  text: "Cancelar",
+                                  primary: true,
+                                  onClick: () => Get.back(),
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      );
                     },
                   ),
             const SizedBox(
