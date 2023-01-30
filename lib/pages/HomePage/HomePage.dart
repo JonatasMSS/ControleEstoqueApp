@@ -60,9 +60,10 @@ class _HomePageState extends State<HomePage> {
                   description: 'Meus produtos',
                   onClick: () => Get.toNamed('/produtos'),
                 ),
-                const BigIconButton(
+                BigIconButton(
                   imageLocation: 'lib/assets/images/IconConfig.png',
                   description: 'Configurações',
+                  onClick: () => Get.toNamed('/configPage'),
                 )
               ],
             )

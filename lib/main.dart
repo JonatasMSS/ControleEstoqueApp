@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
+import 'package:genilson_app/pages/ConfigPage/ConfigPage.dart';
 import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
 import 'package:genilson_app/pages/HomePage/HomePage.dart';
 import 'package:genilson_app/pages/PedidoToProdutosPage/PedidoToProdutosPage.dart';
@@ -52,7 +53,8 @@ class MainApp extends StatelessWidget {
             objectBox: objectBox,
           ),
         ),
-        GetPage(name: '/pdfpage', page: () => PdfPage())
+        GetPage(name: '/pdfpage', page: () => PdfPage()),
+        GetPage(name: '/configPage', page: () => const ConfigPage())
       ],
     );
   }
