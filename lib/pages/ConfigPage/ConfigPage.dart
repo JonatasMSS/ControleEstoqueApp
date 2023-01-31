@@ -99,6 +99,7 @@ class ConfigPage extends StatelessWidget {
                             text: "Sim",
                             onClick: () {
                               eventsBox.removeAllProducts();
+
                               Get.back(result: true);
                             },
                           ),

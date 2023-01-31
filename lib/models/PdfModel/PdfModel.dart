@@ -222,7 +222,7 @@ class PdfModel {
                         ),
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text('Preço unitário',
-                            textAlign: pw.TextAlign.center),
+                            textAlign: pw.TextAlign.center,textScaleFactor: 0.9),
                       ),
                     ),
                     pw.Expanded(

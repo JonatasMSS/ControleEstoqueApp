@@ -111,10 +111,11 @@ class _PedidosToProdutosPageState extends State<PedidosToProdutosPage> {
             FloatingActionButton.extended(
               label: Container(
                 alignment: Alignment.center,
-                constraints: const BoxConstraints(
-                  minWidth: 110,
+                constraints: const BoxConstraints(minWidth: 110, maxWidth: 150),
+                child: Text(
+                  'Valor total: ${valorTotal.toStringAsFixed(2)}',
+                  textAlign: TextAlign.center,
                 ),
-                child: Text('Valor total: ${valorTotal.toStringAsFixed(2)}'),
               ),
               onPressed: () => {},
             ),
