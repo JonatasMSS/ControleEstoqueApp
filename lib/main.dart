@@ -20,7 +20,7 @@ Future<void> main() async {
 
   objectBox = await ObjectBox.create();
   final eventos = EventsBox(boxDatabase: objectBox);
-  generateDataToDatabase(objectBox);
+
   runApp(const MainApp());
 }
 
