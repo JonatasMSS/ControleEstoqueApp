@@ -70,7 +70,7 @@ class _ProdutosPageState extends State<ProdutosPage> {
         (a, b) => a.name.compareTo(b.name),
       );
     suggestionDatabase = produtos;
-    // TODO: implement initState
+
     super.initState();
   }
 

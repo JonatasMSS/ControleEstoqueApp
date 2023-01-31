@@ -1,16 +1,27 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:get/get.dart';
+
+import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
 
 import '../../components/NavBar/NavBarComponent.dart';
 
 class ConfigPage extends StatelessWidget {
-  const ConfigPage({super.key});
+  ObjectBox objectBox;
+
+  ConfigPage({
+    Key? key,
+    required this.objectBox,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final EventsBox eventsBox = EventsBox(boxDatabase: objectBox);
+
     return Scaffold(
       backgroundColor: const Color(0xFFE4E4E4),
       appBar: NavBarComponent(NavBarTitle: 'Configurações'),
@@ -31,17 +42,30 @@ class ConfigPage extends StatelessWidget {
                         ),
                         actionsAlignment: MainAxisAlignment.spaceAround,
                         actions: [
-                          const SimpleButtonC(
+                          SimpleButtonC(
                             text: "Sim",
+                            onClick: () {
+                              eventsBox.removeAllClients();
+                              Get.back(result: true);
+                            },
                           ),
                           SimpleButtonC(
                             text: "Não!",
                             primary: true,
-                            onClick: () => Get.back(),
+                            onClick: () => Get.back(result: false),
                           ),
                         ],
                       );
-                    });
+                    }).then((value) {
+                  if (value) {
+                    Get.snackbar(
+                      'Remoção de clientes',
+                      'Clientes removidos do banco de dados com sucesso',
+                      backgroundColor: Colors.green.shade300,
+                      colorText: Colors.white60,
+                    );
+                  }
+                });
               },
               leading: const CircleAvatar(
                 backgroundColor: Colors.red,
@@ -71,17 +95,30 @@ class ConfigPage extends StatelessWidget {
                         ),
                         actionsAlignment: MainAxisAlignment.spaceAround,
                         actions: [
-                          const SimpleButtonC(
+                          SimpleButtonC(
                             text: "Sim",
+                            onClick: () {
+                              eventsBox.removeAllProducts();
+                              Get.back(result: true);
+                            },
                           ),
                           SimpleButtonC(
                             text: "Não!",
                             primary: true,
-                            onClick: () => Get.back(),
+                            onClick: () => Get.back(result: false),
                           ),
                         ],
                       );
-                    });
+                    }).then((value) {
+                  if (value) {
+                    Get.snackbar(
+                      'Remoção de produtos',
+                      'Produtos resetados no banco de dados com sucesso',
+                      backgroundColor: Colors.green.shade300,
+                      colorText: Colors.white60,
+                    );
+                  }
+                });
               },
               leading: const CircleAvatar(
                 backgroundColor: Colors.red,

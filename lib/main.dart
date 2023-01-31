@@ -57,7 +57,11 @@ class MainApp extends StatelessWidget {
           ),
         ),
         GetPage(name: '/pdfpage', page: () => PdfPage()),
-        GetPage(name: '/configPage', page: () => const ConfigPage())
+        GetPage(
+            name: '/configPage',
+            page: () => ConfigPage(
+                  objectBox: objectBox,
+                ))
       ],
     );
   }
