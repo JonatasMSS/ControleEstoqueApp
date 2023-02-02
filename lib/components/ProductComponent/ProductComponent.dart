@@ -147,7 +147,7 @@ class _ProductComponentState extends State<ProductComponent> {
                   const SizedBox(
                     height: 2,
                   ),
-                  isQuantityEmpty
+                  isQuantityEmpty && !widget.isEditable
                       ? const Text(
                           'Em falta',
                           style: TextStyle(

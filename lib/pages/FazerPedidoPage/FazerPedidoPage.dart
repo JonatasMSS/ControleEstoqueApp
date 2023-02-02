@@ -150,6 +150,7 @@ class _FazerPedidoPageState extends State<FazerPedidoPage> {
                   itemBuilder: (context, index) {
                     final ClientModel myClient = suggestionClients[index];
                     return ClientComponent(
+                      haveNavigation: true,
                       cliente: myClient,
                     );
                   },

@@ -81,7 +81,7 @@ class EventsBox {
     productsBox.remove(id);
   }
 
-  void removeAllProducts() {
+  Future<void> removeAllProducts() async {
     final store = boxDatabase.store;
     final productsBox = store.box<ProductModel>();
     productsBox.removeAll();

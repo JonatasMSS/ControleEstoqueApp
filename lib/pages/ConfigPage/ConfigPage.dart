@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:genilson_app/database/eventsBox.dart';
+import 'package:genilson_app/utils/generate_data_to_database.dart';
 import 'package:get/get.dart';
 
 import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
@@ -97,9 +98,11 @@ class ConfigPage extends StatelessWidget {
                         actions: [
                           SimpleButtonC(
                             text: "Sim",
-                            onClick: () {
+                            onClick: () async {
                               eventsBox.removeAllProducts();
-
+                              await Future.delayed(
+                                  const Duration(milliseconds: 500));
+                              generateDataToDatabase(objectBox);
                               Get.back(result: true);
                             },
                           ),

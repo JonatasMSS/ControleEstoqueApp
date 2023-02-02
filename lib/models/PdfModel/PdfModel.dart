@@ -26,7 +26,8 @@ class PdfModel {
 
   Future<Uint8List> generatePDF() async {
     final List<dynamic> produtosWidgets = order.map((e) {
-      return pw.Row(
+      return pw.Container(
+          child: pw.Row(
         children: [
           pw.Expanded(
             child: pw.Container(
@@ -79,7 +80,7 @@ class PdfModel {
             ),
           ),
         ],
-      );
+      ));
     }).toList();
 
     final pdf = pw.Document(
@@ -222,7 +223,8 @@ class PdfModel {
                         ),
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text('Preço unitário',
-                            textAlign: pw.TextAlign.center,textScaleFactor: 0.9),
+                            textAlign: pw.TextAlign.center,
+                            textScaleFactor: 0.9),
                       ),
                     ),
                     pw.Expanded(
