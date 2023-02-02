@@ -1,15 +1,44 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+
 import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
 import 'package:genilson_app/components/DropDownInputC/DropDownInputC.dart';
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
 import 'package:genilson_app/components/NavBar/NavBarComponent.dart';
 import 'package:genilson_app/components/SimpleButtonC/SimpleButtonC.dart';
+import 'package:genilson_app/database/ObjectBox.dart';
+import 'package:genilson_app/database/eventsBox.dart';
+import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 
-class ClientesPage extends StatelessWidget {
-  const ClientesPage({super.key});
+class ClientesPage extends StatefulWidget {
+  ObjectBox objectBox;
+
+  ClientesPage({
+    Key? key,
+    required this.objectBox,
+  }) : super(key: key);
+
+  @override
+  State<ClientesPage> createState() => _ClientesPageState();
+}
+
+class _ClientesPageState extends State<ClientesPage> {
+  late EventsBox eventsBox;
+  late List<ClientModel> clients;
+
+  @override
+  void initState() {
+    eventsBox = EventsBox(boxDatabase: widget.objectBox);
+    clients = eventsBox.listarClientes();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,50 +46,85 @@ class ClientesPage extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF6AFF79),
           onPressed: () => showDialog(
+              useRootNavigator: true,
               barrierDismissible: false,
               context: context,
               builder: (context) {
-                return const ClientDialogAdd();
-              }),
+                return ClientDialogAdd(
+                  eventsDatabase: eventsBox,
+                );
+              }).then((value) {
+            if (value) {
+              setState(() {
+                clients = eventsBox.listarClientes();
+              });
+              Get.snackbar(
+                'Cliente adicionado',
+                'Cliente adicionado com sucesso!',
+                backgroundColor: Colors.blue,
+                colorText: Colors.white,
+                icon: const Icon(Icons.person),
+              );
+            } else {
+              print('Cancelado');
+            }
+          }),
           child: const Icon(Icons.add),
         ),
         backgroundColor: const Color(0xFFE4E4E4),
         appBar: NavBarComponent(NavBarTitle: 'Meus Clientes'),
         body: SingleChildScrollView(
           child: Column(
-            children: const [
-              SizedBox(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              DataByDay(
+                valueData: 'segunda',
+                title: 'Segunda-feira',
+                dataChildrens: clients,
+                eventsBox: eventsBox,
+                isChildrensEditable: true,
+              ),
+              const SizedBox(
                 height: 20,
               ),
               DataByDay(
+                valueData: 'terca',
                 title: 'Terça-feira',
-                dataChildrens: [
-                  ClientComponent(),
-                ],
+                dataChildrens: clients,
+                eventsBox: eventsBox,
+                isChildrensEditable: true,
               ),
-              SizedBox(
-                height: 40,
+              const SizedBox(
+                height: 30,
               ),
               DataByDay(
+                valueData: 'quarta',
                 title: 'Quarta-feira',
-                dataChildrens: [],
+                dataChildrens: clients,
+                eventsBox: eventsBox,
+                isChildrensEditable: true,
               ),
-              SizedBox(
-                height: 40,
+              const SizedBox(
+                height: 30,
               ),
               DataByDay(
+                valueData: 'quinta',
                 title: 'Quinta-feira',
-                dataChildrens: [],
+                dataChildrens: clients,
+                eventsBox: eventsBox,
+                isChildrensEditable: true,
               ),
-              SizedBox(
-                height: 40,
+              const SizedBox(
+                height: 30,
               ),
               DataByDay(
+                valueData: 'sexta',
                 title: 'Sexta-feira',
-                dataChildrens: [],
-              ),
-              SizedBox(
-                height: 40,
+                dataChildrens: clients,
+                eventsBox: eventsBox,
+                isChildrensEditable: true,
               ),
             ],
           ),
@@ -69,7 +133,12 @@ class ClientesPage extends StatelessWidget {
 }
 
 class ClientDialogAdd extends StatefulWidget {
-  const ClientDialogAdd({super.key});
+  final EventsBox eventsDatabase;
+
+  ClientDialogAdd({
+    Key? key,
+    required this.eventsDatabase,
+  }) : super(key: key);
 
   @override
   State<ClientDialogAdd> createState() => _ClientDialogAddState();
@@ -77,6 +146,10 @@ class ClientDialogAdd extends StatefulWidget {
 
 class _ClientDialogAddState extends State<ClientDialogAdd> {
   String? _dateData;
+
+  final TextEditingController nome = TextEditingController();
+  final TextEditingController numero = TextEditingController();
+
   void hChangeDateData(String? value) {
     setState(() {
       _dateData = value;
@@ -103,16 +176,18 @@ class _ClientDialogAddState extends State<ClientDialogAdd> {
         const SizedBox(
           height: 10,
         ),
-        const InputFormComponent(
+        InputFormComponent(
           titleForm: 'Nome do cliente',
           placeholder: 'Nome do cliente',
+          controller: nome,
         ),
         const SizedBox(
           height: 20,
         ),
-        const InputFormComponent(
+        InputFormComponent(
           titleForm: 'Numero',
           placeholder: 'Numero do cliente',
+          controller: numero,
           type: TextInputType.number,
         ),
         const SizedBox(
@@ -131,11 +206,20 @@ class _ClientDialogAddState extends State<ClientDialogAdd> {
             SimpleButtonC(
               primary: true,
               text: 'Confirmar',
-              onClick: () => Navigator.pop(context),
+              onClick: () async {
+                final ClientModel newClient = ClientModel(
+                  name: nome.text,
+                  number: int.parse(numero.text),
+                  date: _dateData!,
+                );
+                await widget.eventsDatabase.addClientToObjectBox(newClient);
+
+                Get.back(result: true);
+              },
             ),
             SimpleButtonC(
               text: 'Cancelar',
-              onClick: () => Navigator.pop(context),
+              onClick: () => Get.back(result: false),
             )
           ],
         ),
