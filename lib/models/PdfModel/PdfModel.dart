@@ -27,60 +27,48 @@ class PdfModel {
   Future<Uint8List> generatePDF() async {
     final List<dynamic> produtosWidgets = order.map((e) {
       return pw.Container(
+          decoration: const pw.BoxDecoration(
+              border: pw.Border(bottom: pw.BorderSide(color: PdfColors.black))),
           child: pw.Row(
-        children: [
-          pw.Expanded(
-            child: pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 1),
+            children: [
+              pw.Expanded(
+                flex: 3,
+                child: pw.Container(
+                  padding: const pw.EdgeInsets.all(2),
+                  child: pw.Text(e.product.name, textAlign: pw.TextAlign.left),
+                ),
               ),
-              padding: const pw.EdgeInsets.all(2),
-              child: pw.Text(e.product.name, textAlign: pw.TextAlign.center),
-            ),
-          ),
-          pw.Expanded(
-            child: pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 1),
+              // pw.Expanded(
+              //   child: pw.Container(
+              //     padding: const pw.EdgeInsets.all(2),
+              //     child: pw.Text('UN', textAlign: pw.TextAlign.center),
+              //   ),
+              // ),
+              pw.Expanded(
+                child: pw.Container(
+                  padding: const pw.EdgeInsets.all(2),
+                  child: pw.Text(e.quantity.toString(),
+                      textAlign: pw.TextAlign.center),
+                ),
               ),
-              padding: const pw.EdgeInsets.all(2),
-              child: pw.Text('UN', textAlign: pw.TextAlign.center),
-            ),
-          ),
-          pw.Expanded(
-            child: pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 1),
+              pw.Expanded(
+                child: pw.Container(
+                  padding: const pw.EdgeInsets.all(2),
+                  child: pw.Text(e.product.price.toStringAsFixed(2),
+                      textAlign: pw.TextAlign.center),
+                ),
               ),
-              padding: const pw.EdgeInsets.all(2),
-              child: pw.Text(e.quantity.toString(),
-                  textAlign: pw.TextAlign.center),
-            ),
-          ),
-          pw.Expanded(
-            child: pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 1),
+              pw.Expanded(
+                child: pw.Container(
+                  padding: const pw.EdgeInsets.all(2),
+                  child: pw.Text(
+                    e.priceMultiplied.toStringAsFixed(2),
+                    textAlign: pw.TextAlign.center,
+                  ),
+                ),
               ),
-              padding: const pw.EdgeInsets.all(2),
-              child: pw.Text(e.product.price.toStringAsFixed(2),
-                  textAlign: pw.TextAlign.center),
-            ),
-          ),
-          pw.Expanded(
-            child: pw.Container(
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 1),
-              ),
-              padding: const pw.EdgeInsets.all(2),
-              child: pw.Text(
-                e.priceMultiplied.toStringAsFixed(2),
-                textAlign: pw.TextAlign.center,
-              ),
-            ),
-          ),
-        ],
-      ));
+            ],
+          ));
     }).toList();
 
     final pdf = pw.Document(
@@ -185,6 +173,7 @@ class PdfModel {
                 pw.Row(
                   children: [
                     pw.Expanded(
+                      flex: 3,
                       child: pw.Container(
                         decoration: pw.BoxDecoration(
                           color: PdfColor.fromHex('#d9d9d9'),
@@ -194,16 +183,17 @@ class PdfModel {
                         child: pw.Text('Nome', textAlign: pw.TextAlign.center),
                       ),
                     ),
-                    pw.Expanded(
-                      child: pw.Container(
-                        decoration: pw.BoxDecoration(
-                          color: PdfColor.fromHex('#d9d9d9'),
-                          border: pw.Border.all(width: 1),
-                        ),
-                        padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text('UN', textAlign: pw.TextAlign.center),
-                      ),
-                    ),
+                    //TODO: UNIDADE REMOVIDA
+                    // pw.Expanded(
+                    //   child: pw.Container(
+                    //     decoration: pw.BoxDecoration(
+                    //       color: PdfColor.fromHex('#d9d9d9'),
+                    //       border: pw.Border.all(width: 1),
+                    //     ),
+                    //     padding: const pw.EdgeInsets.all(2),
+                    //     child: pw.Text('UN', textAlign: pw.TextAlign.center),
+                    //   ),
+                    // ),
                     pw.Expanded(
                       child: pw.Container(
                         decoration: pw.BoxDecoration(
@@ -233,7 +223,7 @@ class PdfModel {
                         ),
                         padding: const pw.EdgeInsets.all(2),
                         child: pw.Text(
-                          'Valor total',
+                          'Total',
                           textAlign: pw.TextAlign.center,
                         ),
                       ),
