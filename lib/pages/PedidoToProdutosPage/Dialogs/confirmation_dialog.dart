@@ -65,9 +65,15 @@ class ConfirmationDialog extends StatelessWidget {
                       itemCount: orders?.length ?? 1,
                       itemBuilder: (context, index) {
                         final OrderModel? order = orders?[index];
-                        const double scaleFont = 1.3;
+                        const double scaleFont = 1.2;
                         return Container(
                           margin: const EdgeInsets.symmetric(vertical: 5),
+                          padding: const EdgeInsets.all(3),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                            color: Colors.black,
+                          ))),
                           child: Row(
                             children: [
                               Expanded(
@@ -77,13 +83,15 @@ class ConfirmationDialog extends StatelessWidget {
                                 textScaleFactor: scaleFont,
                               )),
                               Expanded(
+                                  flex: 3,
                                   child: Text(
-                                order.product.name,
-                                textScaleFactor: scaleFont,
-                              )),
+                                    order.product.name,
+                                    textScaleFactor: scaleFont,
+                                    style: const TextStyle(fontSize: 13),
+                                  )),
                               Expanded(
                                 child: Text(
-                                  'RS${order.priceMultiplied}',
+                                  'RS${order.priceMultiplied.toStringAsFixed(2)}',
                                   textScaleFactor: scaleFont,
                                 ),
                               ),
