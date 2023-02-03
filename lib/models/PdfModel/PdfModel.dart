@@ -211,8 +211,7 @@ class PdfModel {
                           border: pw.Border.all(width: 1),
                         ),
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text('Quantidade',
-                            textAlign: pw.TextAlign.center),
+                        child: pw.Text('Qt', textAlign: pw.TextAlign.center),
                       ),
                     ),
                     pw.Expanded(
@@ -222,9 +221,8 @@ class PdfModel {
                           border: pw.Border.all(width: 1),
                         ),
                         padding: const pw.EdgeInsets.all(2),
-                        child: pw.Text('Preço unitário',
-                            textAlign: pw.TextAlign.center,
-                            textScaleFactor: 0.9),
+                        child: pw.Text('Preço',
+                            textAlign: pw.TextAlign.center, textScaleFactor: 1),
                       ),
                     ),
                     pw.Expanded(
