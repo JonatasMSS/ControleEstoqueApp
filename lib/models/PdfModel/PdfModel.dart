@@ -78,13 +78,13 @@ class PdfModel {
     final font = await PdfGoogleFonts.nunitoRegular();
 
     pdf.addPage(
-      pw.Page(
+      pw.MultiPage(
         theme: pw.ThemeData(
           defaultTextStyle: pw.TextStyle(font: font, fontSize: 15),
         ),
         build: (context) {
-          return pw.Expanded(
-            child: pw.Column(
+          return [
+            pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.Row(
@@ -233,25 +233,25 @@ class PdfModel {
                 //Lista dos produtos
                 ...produtosWidgets,
               ],
-            ),
-          );
+            )
+          ];
         },
       ),
     );
-    produtosWidgets.length >= 18
-        ? pdf.addPage(pw.Page(
-            theme: pw.ThemeData(
-              defaultTextStyle: pw.TextStyle(font: font, fontSize: 15),
-            ),
-            build: (context) {
-              return pw.Column(
-                children: [
-                  ...produtosWidgets.skip(19),
-                ],
-              );
-            },
-          ))
-        : '';
+    // produtosWidgets.length >= 18
+    //     ? pdf.addPage(pw.Page(
+    //         theme: pw.ThemeData(
+    //           defaultTextStyle: pw.TextStyle(font: font, fontSize: 15),
+    //         ),
+    //         build: (context) {
+    //           return pw.Column(
+    //             children: [
+    //               ...produtosWidgets.skip(19),
+    //             ],
+    //           );
+    //         },
+    //       ))
+    //     : '';
     return pdf.save();
   }
 
