@@ -21,28 +21,34 @@ class PdfPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFFE4E4E4),
-      body: PdfPreview(
-        actions: [
-          TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-              ),
-              onPressed: () => Get.offAllNamed('/'),
-              child: const Text(
-                'SAIR',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
+      body: WillPopScope(
+        onWillPop: () async {
+          Get.offAllNamed('/');
+          return false;
+        },
+        child: PdfPreview(
+          actions: [
+            TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
                 ),
-              )),
-        ],
-        pdfFileName: 'ProdutosCliente.pdf',
-        canChangePageFormat: false,
-        canChangeOrientation: false,
-        canDebug: false,
-        shouldRepaint: true,
-        previewPageMargin:
-            const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
-        build: (format) => pdfModelToPage.generatePDF(),
+                onPressed: () => Get.offAllNamed('/'),
+                child: const Text(
+                  'SAIR',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                  ),
+                )),
+          ],
+          pdfFileName: 'ProdutosCliente.pdf',
+          canChangePageFormat: false,
+          canChangeOrientation: false,
+          canDebug: false,
+          shouldRepaint: true,
+          previewPageMargin:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+          build: (format) => pdfModelToPage.generatePDF(),
+        ),
       ),
     );
   }
