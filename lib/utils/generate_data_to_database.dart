@@ -1,5 +1,6 @@
 import 'package:genilson_app/database/ObjectBox.dart';
 import 'package:genilson_app/database/eventsBox.dart';
+import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
 
 void generateDataToDatabase(ObjectBox objectBox) {
@@ -90,4 +91,35 @@ void generateDataToDatabase(ObjectBox objectBox) {
   eventsBox
       .addManyProductsToDatabase(defaultProducts)
       .then((value) => print("Produtos adicionados com sucesso!"));
+}
+
+void generateClientsToDatabase(ObjectBox objectBox) {
+  final EventsBox eventbox = EventsBox(boxDatabase: objectBox);
+  final List<ClientModel> clientSegunda = List.generate(20, (index) {
+    return ClientModel(name: 'ABCDEFGHIJK', number: index, date: 'segunda');
+  });
+  final List<ClientModel> clientTerca = List.generate(20, (index) {
+    return ClientModel(name: 'ABCDEFGHIJK', number: index, date: 'terca');
+  });
+  final List<ClientModel> clientQuarta = List.generate(20, (index) {
+    return ClientModel(name: 'ABCDEFGHIJK', number: index, date: 'quarta');
+  });
+  final List<ClientModel> clientQuinta = List.generate(20, (index) {
+    return ClientModel(name: 'ABCDEFGHIJK', number: index, date: 'quinta');
+  });
+  final List<ClientModel> clientSexta = List.generate(20, (index) {
+    return ClientModel(name: 'ABCDEFGHIJK', number: index, date: 'sexta');
+  });
+
+  final List<ClientModel> clientes = [
+    ...clientSegunda,
+    ...clientTerca,
+    ...clientQuarta,
+    ...clientQuinta,
+    ...clientSexta,
+  ];
+
+  eventbox
+      .addManyClientsToObjectBox(clientes)
+      .then((value) => print("Clientes adicionados com sucesso!"));
 }

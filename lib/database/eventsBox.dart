@@ -19,6 +19,12 @@ class EventsBox {
     await clientBox.putAsync(cliente);
   }
 
+  Future<void> addManyClientsToObjectBox(List<ClientModel> clientes) async {
+    final store = boxDatabase.store;
+    final clientBox = store.box<ClientModel>();
+    clientBox.putMany(clientes);
+  }
+
   Future<void> updateClient(ClientModel client) async {
     final store = boxDatabase.store;
     final clientBox = store.box<ClientModel>();

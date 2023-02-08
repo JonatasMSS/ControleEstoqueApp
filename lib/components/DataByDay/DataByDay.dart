@@ -31,15 +31,16 @@ class DataByDay extends StatefulWidget {
 class _DataByDayState extends State<DataByDay> {
   @override
   Widget build(BuildContext context) {
-    _filterDataByValueData(List<ClientModel> data) {
-      final List<ClientModel> _newData =
+    int number = 1;
+
+    filterDataByValueData(List<ClientModel> data) {
+      final List<ClientModel> newData =
           data.where((element) => element.date == widget.valueData).toList();
-      return _newData;
+      return newData;
     }
 
     List<ClientModel> _filteredData =
-        _filterDataByValueData(widget.dataChildrens ?? []);
-
+        filterDataByValueData(widget.dataChildrens ?? []);
     return ExpansionTile(
       tilePadding: const EdgeInsets.symmetric(horizontal: 18),
       title: Container(
@@ -85,20 +86,25 @@ class _DataByDayState extends State<DataByDay> {
                                   onClick: () {
                                     widget.eventsBox
                                         ?.removeClientById(myClient.id);
-                                    setState(() {
-                                      widget.dataChildrens?.removeAt(index);
-                                    });
-                                    Get.back();
+
+                                    Get.back(result: true);
                                   },
                                 ),
                                 SimpleButtonC(
                                   text: "Cancelar",
                                   primary: true,
-                                  onClick: () => Get.back(),
+                                  onClick: () => Get.back(result: false),
                                 )
                               ],
                             );
+                          }).then((value) {
+                        if (value) {
+                          setState(() {
+                            _filteredData = filterDataByValueData(
+                                widget.dataChildrens ?? []);
                           });
+                        }
+                      });
                     },
                     haveNavigation: widget.haveChildrensNavigation,
                     editable: widget.isChildrensEditable,
