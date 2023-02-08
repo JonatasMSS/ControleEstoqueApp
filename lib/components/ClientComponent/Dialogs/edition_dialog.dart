@@ -11,6 +11,7 @@ import 'package:genilson_app/models/ClientModel/ClientModel.dart';
 import '../../InputFormComponent/InputFormComponent.dart';
 import '../../SimpleButtonC/SimpleButtonC.dart';
 
+// ignore: must_be_immutable
 class EditionDialog extends StatefulWidget {
   ClientModel? cliente;
   ObjectBox? objectBox;

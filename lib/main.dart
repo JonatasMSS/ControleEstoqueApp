@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:genilson_app/database/ObjectBox.dart';
-import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
 import 'package:genilson_app/pages/ConfigPage/ConfigPage.dart';
 import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
@@ -9,7 +7,6 @@ import 'package:genilson_app/pages/HomePage/HomePage.dart';
 import 'package:genilson_app/pages/PedidoToProdutosPage/PedidoToProdutosPage.dart';
 import 'package:genilson_app/pages/ProdutosPage/ProdutosPage.dart';
 import 'package:genilson_app/pages/pdfPage/pdf_page.dart';
-import 'package:genilson_app/utils/generate_data_to_database.dart';
 
 import 'package:get/get.dart';
 
@@ -19,7 +16,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   objectBox = await ObjectBox.create();
-  final eventos = EventsBox(boxDatabase: objectBox);
 
   runApp(const MainApp());
 }

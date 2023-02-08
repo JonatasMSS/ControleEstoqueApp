@@ -1,12 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 
-import 'package:genilson_app/components/ClientComponent/ClientComponent.dart';
 import 'package:genilson_app/components/DataByDay/DataByDay.dart';
 import 'package:genilson_app/components/DropDownInputC/DropDownInputC.dart';
 import 'package:genilson_app/components/InputFormComponent/InputFormComponent.dart';
@@ -65,9 +61,7 @@ class _ClientesPageState extends State<ClientesPage> {
                 colorText: Colors.white,
                 icon: const Icon(Icons.person),
               );
-            } else {
-              print("A");
-            }
+            } else {}
           }),
           child: const Icon(Icons.add),
         ),

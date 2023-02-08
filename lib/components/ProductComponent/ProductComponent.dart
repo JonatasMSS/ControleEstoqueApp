@@ -1,12 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-import 'dart:math';
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:genilson_app/models/OrderModel/OrderModel.dart';
 import 'package:genilson_app/models/ProductModel/ProductModel.dart';
@@ -59,13 +53,15 @@ class _ProductComponentState extends State<ProductComponent> {
             priceMultiplied: widget.produto.quantityMultplied);
       });
     } else {
-      final OrderModel newOrder = OrderModel(
-          product: widget.produto,
-          quantity: widget.produto.quantityToOrder,
-          priceMultiplied: widget.produto.quantityMultplied);
-      setState(() {
-        widget.orderPage?.add(newOrder);
-      });
+      if (widget.produto.quantityToOrder > 0) {
+        final OrderModel newOrder = OrderModel(
+            product: widget.produto,
+            quantity: widget.produto.quantityToOrder,
+            priceMultiplied: widget.produto.quantityMultplied);
+        setState(() {
+          widget.orderPage?.add(newOrder);
+        });
+      }
     }
   }
 
@@ -286,7 +282,6 @@ class CounterItem extends StatefulWidget {
 class _CounterItemState extends State<CounterItem> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
