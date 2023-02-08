@@ -9,12 +9,12 @@ import 'package:get/get.dart';
 
 class DataByDay extends StatefulWidget {
   final String? title;
-  final List<ClientModel>? dataChildrens;
+  List<ClientModel>? dataChildrens;
   final String valueData;
   final bool haveChildrensNavigation;
   final bool isChildrensEditable;
   final EventsBox? eventsBox;
-  const DataByDay({
+  DataByDay({
     Key? key,
     this.title,
     this.dataChildrens,
@@ -31,8 +31,6 @@ class DataByDay extends StatefulWidget {
 class _DataByDayState extends State<DataByDay> {
   @override
   Widget build(BuildContext context) {
-    int number = 1;
-
     filterDataByValueData(List<ClientModel> data) {
       final List<ClientModel> newData =
           data.where((element) => element.date == widget.valueData).toList();
@@ -100,8 +98,8 @@ class _DataByDayState extends State<DataByDay> {
                           }).then((value) {
                         if (value) {
                           setState(() {
-                            _filteredData = filterDataByValueData(
-                                widget.dataChildrens ?? []);
+                            widget.dataChildrens =
+                                widget.eventsBox?.listarClientes();
                           });
                         }
                       });

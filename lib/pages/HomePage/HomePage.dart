@@ -84,11 +84,11 @@ class _HomePageState extends State<HomePage> {
                       BigIconButton(
                         imageLocation: 'lib/assets/images/IconProducts.png',
                         description: 'Meus produtos',
-                        onClick: () {
+                        onClick: () async {
                           setState(() {
                             isLoading = true;
                           });
-                          Get.toNamed('/produtos');
+                          await Get.toNamed('/produtos');
                           setState(() {
                             isLoading = false;
                           });

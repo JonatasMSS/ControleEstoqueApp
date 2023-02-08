@@ -86,7 +86,7 @@ void generateDataToDatabase(ObjectBox objectBox) {
     "G.A L AZUL"
   ];
   final List<ProductModel> defaultProducts = snackList.map((name) {
-    return ProductModel(name: name, price: 0.00, quantity: 0);
+    return ProductModel(name: name, price: 1.00, quantity: 5);
   }).toList();
   eventsBox
       .addManyProductsToDatabase(defaultProducts)
