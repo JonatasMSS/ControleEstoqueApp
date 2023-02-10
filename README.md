@@ -1,16 +1,9 @@
-# genilson_app
+# 📱📱 Aplicativo de gestão de estoque e venda de produtos 📱📱
+Aplicativo criado com intuito de auxiliar pequenos fornecedores na gestão de estoques de produtos e controlar as suas vendas.
 
-A new Flutter project.
+## ⚒️Stack utilizada⚒️
 
-## Getting Started
+**Front-end**: Flutter + Dart
 
-This project is a starting point for a Flutter application.
+**Back-end**: ObjectBox (Salvamento persistente no celular)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
