@@ -94,22 +94,22 @@ class PdfModel {
                     pw.Expanded(
                       flex: 2,
                       child: pw.Text(
-                        'G&D Bomboniere',
+                        'M&S MStocker',
                         textScaleFactor: 1.9,
                       ),
                     ),
                     pw.Expanded(
                       child: pw.Column(
                         children: [
-                          pw.Text('G&D',
+                          pw.Text('M&S',
                               style: const pw.TextStyle(
                                 fontSize: 28,
                               )),
                           pw.Text(
-                            'Bomboniere',
+                            'MStocker ',
                             style: const pw.TextStyle(fontSize: 18),
                           ),
-                          pw.Text('Org. Genilson Careca', textScaleFactor: 0.7)
+                          pw.Text('Org. MStocker', textScaleFactor: 0.7)
                         ],
                       ),
                     ),
@@ -124,8 +124,7 @@ class PdfModel {
                           border: pw.Border.all(width: 1),
                         ),
                         padding: const pw.EdgeInsets.all(2),
-                        child:
-                            pw.Text('Fornecedor: Genilson', textScaleFactor: 1),
+                        child: pw.Text('Fornecedor: ', textScaleFactor: 1),
                       ),
                     ),
                     pw.Expanded(

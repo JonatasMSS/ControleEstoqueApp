@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:genilson_app/database/ObjectBox.dart';
+import 'package:genilson_app/database/eventsBox.dart';
 import 'package:genilson_app/pages/ClientesPage/ClientesPage.dart';
 import 'package:genilson_app/pages/ConfigPage/ConfigPage.dart';
 import 'package:genilson_app/pages/FazerPedidoPage/FazerPedidoPage.dart';
@@ -16,7 +17,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   objectBox = await ObjectBox.create();
-
+  final eventos = EventsBox(boxDatabase: objectBox);
   runApp(const MainApp());
 }
 

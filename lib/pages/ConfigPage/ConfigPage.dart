@@ -102,7 +102,7 @@ class ConfigPage extends StatelessWidget {
                               eventsBox.removeAllProducts();
                               await Future.delayed(
                                   const Duration(milliseconds: 500));
-                              generateDataToDatabase(objectBox);
+
                               Get.back(result: true);
                             },
                           ),
